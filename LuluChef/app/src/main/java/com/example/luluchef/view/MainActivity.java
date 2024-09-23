@@ -1,15 +1,14 @@
-package com.example.luluchef;
+package com.example.luluchef.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.luluchef.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
         appName.postOnAnimationDelayed(new Runnable() {
             @Override
             public void run() {
+                Intent intent = new Intent(MainActivity.this, HostedActivity.class);
+                startActivity(intent);
                 finish();
             }
-        }, 5000);
+        }, 3500);
 
     }
 }

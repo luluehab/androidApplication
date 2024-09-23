@@ -47,6 +47,8 @@ dependencies {
     implementation (libs.firebase.firestore)
     implementation ("androidx.navigation:navigation-fragment-ktx:2.8.1")
     implementation ("androidx.navigation:navigation-ui-ktx:2.8.1")
+
+    implementation("com.google.android.material:material:1.6.0")
     // Retrofit
    // implementation("com.google.code.gson:gson:2.11.0")
     //implementation("com.squareup.retrofit2:retrofit:2.11.0")

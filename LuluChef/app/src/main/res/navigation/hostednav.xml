@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hostednav"
+    app:startDestination="@id/homeFrag">
+
+    <fragment
+        android:id="@+id/favFrag"
+        android:name="com.example.luluchef.favourite.view.FavFragment"
+        android:label="favourite"
+        tools:layout="@layout/fragment_fav"/>
+
+
+    <fragment
+        android:id="@+id/searchFrag"
+        android:name="com.example.luluchef.search.view.SearchFragment"
+        android:label="search"
+        tools:layout="@layout/fragment_search"/>
+
+    <fragment
+        android:id="@+id/homeFrag"
+        android:name="com.example.luluchef.home.view.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/planFrag"
+        android:name="com.example.luluchef.planner.view.PlanFragment"
+        android:label="Plan"
+        tools:layout="@layout/fragment_plan"/>
+</navigation>
