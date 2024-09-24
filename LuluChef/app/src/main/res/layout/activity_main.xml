@@ -30,7 +30,7 @@
         android:text="@string/appName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/lulu"
-        android:textSize="70sp"
+        android:textSize="80sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

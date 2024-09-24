@@ -1,0 +1,45 @@
+package com.example.luluchef.network;
+
+import com.example.luluchef.model.Category;
+import com.example.luluchef.model.Country;
+import com.example.luluchef.model.Ingredient;
+import com.example.luluchef.model.Meal;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+public interface APIService {
+
+    // for Category
+    @GET("list.php?c=list")
+    Call<NetworkResponse<Category>> getCategoriesList();
+    @GET("filter.php")
+    Call<NetworkResponse<Meal>> getMealByCategory(@Query("c") String category);
+
+
+    //for Country
+    @GET("list.php?a=list")
+    Call<NetworkResponse<Country>> getCountriesList();
+    @GET("filter.php")
+    Call<NetworkResponse<Meal>> getMealByArea(@Query("a") String area);
+
+
+    //for Ingredients
+    @GET("list.php?i=list")
+    Call<NetworkResponse<Ingredient>> getIngredientsList();
+    @GET("filter.php")
+    Call<NetworkResponse<Meal>> getMealByIngredient(@Query("i") String ingredient);
+
+
+
+    // for random
+    @GET("random.php")
+    Call<NetworkResponse<Meal>> getMealRandom();
+
+
+
+
+
+
+}

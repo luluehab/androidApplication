@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">LuluChef</string>
-    <string name="appName">"Lulu's Kitchen "</string>
+    <string name="appName">"Lulu Kitchen "</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty">"  "</string>
+    <string name="quote">Savoring the flavors that ignite your senses ❤️</string>
+    <string name="inspiration">Daily Inspiration</string>
+    <string name="country">countries</string>
+    <string name="category">Categories</string>
 </resources>

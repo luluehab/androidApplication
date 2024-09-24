@@ -1,8 +1,10 @@
 package com.example.luluchef.view;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,22 +15,38 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luluchef.R;
 import com.example.luluchef.R.id;
+import com.example.luluchef.network.NetworkChecking;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.luluchef.network.Testing;
+import java.util.List;
 
 public class HostedActivity extends AppCompatActivity {
 
     public BottomNavigationView bottomNavigationView;
     public NavController navController;
     private static final String TAG = "HostedActivity";
+
+    private Testing forTest = new Testing();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosted);
-
-
+//check network
+        if (NetworkChecking.isNetworkAvailable(this)) {
+            forTest.testCategories();
+            forTest.testIngredients();
+            forTest.testCountries();
+            forTest.testRandomMeal();
+            forTest.testMealsByCategory();
+            forTest.testMealsByIngredient();
+            forTest.testMealsByArea();
+        } else {
+            Log.e(TAG, "Network is not available");
+        }
         navController = Navigation.findNavController(this, R.id.Hostfragment);
         bottomNavigationView = findViewById(R.id.bottomNavigator);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -62,5 +80,7 @@ public class HostedActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
