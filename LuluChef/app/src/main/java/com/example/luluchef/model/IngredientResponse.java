@@ -16,6 +16,7 @@ public class IngredientResponse {
         return Ingredients;
     }
 
+
     public void setIngredient(List<Ingredient> meals) {
         this.Ingredients = meals;
     }

@@ -8,4 +8,11 @@
     <string name="inspiration">Daily Inspiration</string>
     <string name="country">countries</string>
     <string name="category">Categories</string>
+    <string name="todo">TODO</string>
+    <string name="mealname">Meal Name</string>
+    <string name="info">Info</string>
+    <string name="instructions">Instructions\n</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="steps">Steps\n</string>
+    <string name="area">Area</string>
 </resources>

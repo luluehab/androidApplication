@@ -1,9 +1,20 @@
 package com.example.luluchef.network;
 
+import android.content.Context;
+import android.database.Observable;
+
+import com.airbnb.lottie.animation.content.Content;
 import com.example.luluchef.model.Category;
+import com.example.luluchef.model.CategoryResponse;
 import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Ingredient;
+import com.example.luluchef.model.IngredientResponse;
 import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.MealResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -12,14 +23,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class APIClient {
+public class APIClient  {
 
     private static final String baseURL =  "https://www.themealdb.com/api/json/v1/1/";
     private final APIService apiService;
     private static APIClient client;
 
 
-    private APIClient(){
+    public APIClient(){
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -27,13 +40,16 @@ public class APIClient {
 
         apiService = retrofit.create(APIService.class);
     }
-    public static APIClient getInstance(){
+    public static synchronized APIClient getInstance(){
         if(client == null )
         {
             client=new APIClient();
         }
         return client;
     }
+
+
+
 
     public void getCategoriesList(NetworkCallBack<Category> callback){
         Call<NetworkResponse<Category>> call = apiService.getCategoriesList();
@@ -149,8 +165,9 @@ public class APIClient {
         });
     }
 
-    public void getMealRandom(NetworkCallBack<Meal> callback) {
-        Call<NetworkResponse<Meal>> call = apiService.getMealRandom();
+    public void getMealById(String id , NetworkCallBack<Meal> callback)
+    {
+        Call<NetworkResponse<Meal>> call = apiService.getMealById(id);
         call.enqueue(new Callback<NetworkResponse<Meal>>() {
             @Override
             public void onResponse(Call<NetworkResponse<Meal>> call,retrofit2.Response<NetworkResponse<Meal>> response) {
@@ -167,5 +184,56 @@ public class APIClient {
             }
         });
     }
+    public void getMealRandom(NetworkCallBack<Meal> callback) {
+
+        /*
+
+        // to get only one
+        Call<NetworkResponse<Meal>> call = apiService.getMealRandom();
+        call.enqueue(new Callback<NetworkResponse<Meal>>() {
+            @Override
+            public void onResponse(Call<NetworkResponse<Meal>> call,retrofit2.Response<NetworkResponse<Meal>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().meals);
+                } else {
+                    callback.onFailure("Failed to get meals by Country");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NetworkResponse<Meal>> call, Throwable throwable) {
+                callback.onFailure(throwable.getMessage());
+            }
+        });*/
+
+        final List<Meal> randomMeals = new ArrayList<>();
+        final int totalRandomMeals = 5;  // Number of random meals to fetch
+
+        for (int i = 0; i < totalRandomMeals; i++) {
+            Call<NetworkResponse<Meal>> call = apiService.getMealRandom();
+            call.enqueue(new Callback<NetworkResponse<Meal>>() {
+                @Override
+                public void onResponse(Call<NetworkResponse<Meal>> call, retrofit2.Response<NetworkResponse<Meal>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        randomMeals.addAll(response.body().meals);
+
+                        // Check if we've received all 5 random meals
+                        if (randomMeals.size() == totalRandomMeals) {
+                            callback.onSuccess(randomMeals);  // Return the list once we have all 5
+                        }
+                    } else {
+                        callback.onFailure("Failed to get random meals");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NetworkResponse<Meal>> call, Throwable throwable) {
+                    callback.onFailure(throwable.getMessage());
+                }
+            });
+        }
+    }
+
+
 
 }

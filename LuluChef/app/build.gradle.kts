@@ -44,7 +44,7 @@ dependencies {
     implementation (libs.lottie.v610)
     implementation (libs.android.gif.drawable)
     implementation (libs.android.lottie)
-    implementation (libs.firebase.firestore)
+    //implementation (libs.firebase.firestore)
     implementation ("androidx.navigation:navigation-fragment-ktx:2.8.1")
     implementation ("androidx.navigation:navigation-ui-ktx:2.8.1")
 
@@ -59,4 +59,9 @@ dependencies {
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
+    //youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
+    //circle imageview
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

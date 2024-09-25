@@ -32,6 +32,10 @@ public interface APIService {
     Call<NetworkResponse<Meal>> getMealByIngredient(@Query("i") String ingredient);
 
 
+    // by Id
+    @GET("lookup.php")
+    Call<NetworkResponse<Meal>> getMealById(@Query("i") String id);
+
 
     // for random
     @GET("random.php")

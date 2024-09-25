@@ -10,7 +10,9 @@
         android:name="com.example.luluchef.favourite.view.FavFragment"
         android:label="favourite"
         tools:layout="@layout/fragment_fav"/>
-
+    <action
+        android:id="@+id/action_HOmeFrag_to_detailFrag"
+        app:destination="@id/detailFrag" />
 
     <fragment
         android:id="@+id/searchFrag"
@@ -29,4 +31,10 @@
         android:name="com.example.luluchef.planner.view.PlanFragment"
         android:label="Plan"
         tools:layout="@layout/fragment_plan"/>
+    <fragment
+        android:id="@+id/detailFrag"
+        android:name="com.example.luluchef.details.view.DetailsFragment"
+        android:label="mealDetails"
+        tools:layout="@layout/fragment_details"/>
+
 </navigation>

@@ -36,17 +36,17 @@ public class HostedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosted);
 //check network
-        if (NetworkChecking.isNetworkAvailable(this)) {
+        /*if (NetworkChecking.isNetworkAvailable(this)) {
             forTest.testCategories();
             forTest.testIngredients();
             forTest.testCountries();
             forTest.testRandomMeal();
             forTest.testMealsByCategory();
-            forTest.testMealsByIngredient();
-            forTest.testMealsByArea();
+           forTest.testMealsByIngredient();
+           forTest.testMealsByArea();
         } else {
             Log.e(TAG, "Network is not available");
-        }
+        }*/
         navController = Navigation.findNavController(this, R.id.Hostfragment);
         bottomNavigationView = findViewById(R.id.bottomNavigator);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
