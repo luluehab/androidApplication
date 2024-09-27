@@ -1,16 +1,16 @@
 package com.example.luluchef.details.view;
 
-import static android.content.ContentValues.TAG;
+
 
 import android.os.Bundle;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +18,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
 import com.example.luluchef.details.presenter.DetailPresenter;
-import com.example.luluchef.details.presenter.DetailPresenterInterface;
-import com.example.luluchef.home.Presenter.HomePresenter;
-import com.example.luluchef.home.view.DailyAdapter;
 import com.example.luluchef.model.IngredientModel;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.Repo.MealRepository;
@@ -38,7 +34,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class DetailsFragment extends Fragment implements DetailsView , DetailOnClick {
 
@@ -60,6 +56,8 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
     private int mSelectedIndex;
     String[] videoArray;
     String videoString;
+
+
 
     @Override
     public void onStart() {
@@ -102,7 +100,6 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
         detailPresenter = new DetailPresenter(this , repo );
 
 
-
         if (getArguments() != null) {
             String id = getArguments().getString("id");
             if (id != null) {
@@ -111,19 +108,18 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
         }
 
 
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         ((HostedActivity) requireActivity()).bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
     public void showDetails(Meal meal) {
-      
+
         Glide.with(getContext()).load(meal.getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(mealImg);
         mealName.setText(meal.getStrMeal());
         mealCountry.setText(meal.getStrArea());
@@ -182,9 +178,17 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ((HostedActivity) requireActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
+
     }
 
     @Override
