@@ -32,7 +32,7 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
 
     @Override
     public void addToFavourite(Meal meal) {
-
+        repo.insertMealToFavourite(meal);
     }
 
 

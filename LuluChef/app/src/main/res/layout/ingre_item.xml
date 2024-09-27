@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/gray_400">
+        android:background="@color/material_dynamic_neutral_variant90">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ingredientImg"
