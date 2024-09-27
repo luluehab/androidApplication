@@ -1,29 +1,31 @@
 package com.example.luluchef.home.Presenter;
 
-import android.widget.Toast;
-
-import com.example.luluchef.database.MealRepository;
 import com.example.luluchef.home.view.HomeView;
+import com.example.luluchef.model.Category;
+import com.example.luluchef.model.Country;
+import com.example.luluchef.model.Ingredient;
 import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.MealResponse;
+import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkCallBack;
 
 import java.util.List;
 
-public class HomePresenter implements HomePresenterInterface, NetworkCallBack<Meal> {
+public class HomePresenter implements HomePresenterInterface, NetworkCallBack{
 
     private final HomeView view;
-   // private final MealRepository mealRepo;
-    private final APIClient client;
-    public HomePresenter(HomeView view, APIClient client) {
+    private final MealRepository repo;
+
+    public HomePresenter(HomeView view, MealRepository repo) {
         this.view = view;
-        this.client = client;
+        this.repo = repo;
     }
 
     @Override
     public void loadMeals() {
-        //APIClient client1 = APIClient.getInstance();
-        client.getMealRandom(this);
+
+       repo.getRandomMeal(this);
 
     }
 
@@ -32,13 +34,34 @@ public class HomePresenter implements HomePresenterInterface, NetworkCallBack<Me
 
     }
 
+
     @Override
-    public void onSuccess(List<Meal> response) {
-        view.showMeals(response);
+    public void onSuccessResultMeal(List<Meal> meals) {
+        view.showMeals(meals);
     }
 
     @Override
-    public void onFailure(String error) {
-        view.showErr(error);
+    public void onSuccessFilter(MealResponse meals) {
+
+    }
+
+    @Override
+    public void onSuccessResultCategory(List<Category> categories) {
+
+    }
+
+    @Override
+    public void onSuccessResultIngredient(List<Ingredient> ingredients) {
+
+    }
+
+    @Override
+    public void onSuccessResultCountries(List<Country> countries) {
+
+    }
+
+    @Override
+    public void onFailure(String message) {
+        view.showErr(message);
     }
 }

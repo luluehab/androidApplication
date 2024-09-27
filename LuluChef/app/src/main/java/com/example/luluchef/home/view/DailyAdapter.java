@@ -61,7 +61,6 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         return dailyMeal.size();
     }
 
-/********SETLIST MISSING*************/
     public class DailyViewHolder extends RecyclerView.ViewHolder {
         ImageView mealImg, saveBtn;
         TextView mealName;

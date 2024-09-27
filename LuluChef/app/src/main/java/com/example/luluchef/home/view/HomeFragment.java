@@ -1,7 +1,5 @@
 package com.example.luluchef.home.view;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,24 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.luluchef.R;
-import com.example.luluchef.database.MealRepository;
+import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.home.Presenter.HomePresenter;
-import com.example.luluchef.home.Presenter.HomePresenterInterface;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkChecking;
-import com.example.luluchef.view.HostedActivity;
 import com.google.android.material.snackbar.Snackbar;
-import com.example.luluchef.view.HostedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +40,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     private TextView txtappName, txtqoute ,txtdaily;
     // private ImageView logo;
     private APIClient client;
+    private LocalSource localSource;
     private MealRepository repo;
 
     private DailyAdapter dailyAdapter;
@@ -86,10 +81,9 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         daily.setLayoutManager(dailyLayoutManager);
 
         client = APIClient.getInstance();
-
-
-
-        presenter = new HomePresenter(this,new APIClient());
+        localSource = LocalSource.getInstance(view.getContext());
+        repo = MealRepository.getInstance(localSource , client);
+        presenter = new HomePresenter(this , repo );
         handler = new Handler(Looper.getMainLooper());
         checkNetwork();
 
@@ -99,7 +93,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void onDailyInspireItemClicked(String id) {
-        Toast.makeText(getContext(), "Description will be shown", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getContext(), "Description will be shown", Toast.LENGTH_SHORT).show();
         Bundle args = new Bundle();
         args.putString("id", id);
         NavController navController = Navigation.findNavController(getView());
@@ -108,10 +102,10 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void showMeals(List<Meal> meals) {
-        Log.i(TAG, "showProducts: ");
+        /*Log.i(TAG, "showProducts: ");
         for(Meal meal: meals){
             Log.i(TAG, "ID: " + meal.getIdMeal());
-        }
+        }*/
         dailyAdapter = new DailyAdapter(meals ,getContext() , this) ;
         daily.setAdapter(dailyAdapter);
 

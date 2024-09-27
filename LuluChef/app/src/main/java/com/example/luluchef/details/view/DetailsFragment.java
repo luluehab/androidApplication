@@ -22,11 +22,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.luluchef.R;
+import com.example.luluchef.database.LocalSource;
 import com.example.luluchef.details.presenter.DetailPresenter;
 import com.example.luluchef.details.presenter.DetailPresenterInterface;
+import com.example.luluchef.home.Presenter.HomePresenter;
 import com.example.luluchef.home.view.DailyAdapter;
 import com.example.luluchef.model.IngredientModel;
 import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.view.HostedActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -46,6 +49,9 @@ public class DetailsFragment extends Fragment implements DetailsView {
 
     private RecyclerView ingRecyclerView;
     private RecyclerView.LayoutManager detaileLayoutManager;
+    private APIClient client;
+    private LocalSource localSource;
+    private MealRepository repo;
     private DetailPresenter detailPresenter;
     private YouTubePlayerView youTubePlayer;
     private IngrediantAdaptor ingrediantAdaptor;
@@ -90,7 +96,11 @@ public class DetailsFragment extends Fragment implements DetailsView {
         ingrediantAdaptor = new IngrediantAdaptor(view.getContext());
         ingRecyclerView.setAdapter(ingrediantAdaptor);
 
-        detailPresenter = new DetailPresenter(this , new APIClient());
+        client = APIClient.getInstance();
+        localSource = LocalSource.getInstance(view.getContext());
+        repo = MealRepository.getInstance(localSource , client);
+        detailPresenter = new DetailPresenter(this , repo );
+
 
         toFav.setOnClickListener(v -> {
             Toast.makeText(view.getContext(), "will be add ISA", Toast.LENGTH_SHORT).show();
@@ -155,7 +165,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
                 }
             } catch (NoSuchMethodException  | InvocationTargetException | IllegalAccessException e )
             {
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         }
