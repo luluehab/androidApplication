@@ -45,7 +45,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
    
     private ImageView mealImg;
     private TextView mealName, mealCountry, mealDesc ;
-    private ImageButton toFav;
+   // private ImageButton toFav;
 
     private RecyclerView ingRecyclerView;
     private RecyclerView.LayoutManager detaileLayoutManager;
@@ -87,7 +87,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
         mealName = view.findViewById(R.id.detMealName);
         mealCountry= view.findViewById(R.id.detCountryName);
         mealDesc = view.findViewById(R.id.detailsDescriptionOfmeal);
-        toFav = view.findViewById(R.id.detailsAddToFav);
+       // toFav = view.findViewById(R.id.detailsAddToFav);
         ingRecyclerView = view.findViewById(R.id.detailsIngredientRecycler);
         youTubePlayer = view.findViewById(R.id.youtubePlayer);
         detaileLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL , false);
@@ -102,9 +102,9 @@ public class DetailsFragment extends Fragment implements DetailsView {
         detailPresenter = new DetailPresenter(this , repo );
 
 
-        toFav.setOnClickListener(v -> {
+       /* toFav.setOnClickListener(v -> {
             Toast.makeText(view.getContext(), "will be add ISA", Toast.LENGTH_SHORT).show();
-        });
+        });*/
 
         if (getArguments() != null) {
             String id = getArguments().getString("id");

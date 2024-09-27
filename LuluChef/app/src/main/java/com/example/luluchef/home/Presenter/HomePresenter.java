@@ -31,7 +31,7 @@ public class HomePresenter implements HomePresenterInterface, NetworkCallBack{
 
     @Override
     public void addToFavourite(Meal meal) {
-
+        repo.insertMealToFavourite(meal);
     }
 
 

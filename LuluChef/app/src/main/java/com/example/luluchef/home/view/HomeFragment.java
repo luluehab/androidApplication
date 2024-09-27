@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
         daily = view.findViewById(R.id.inspRecycler);
 
-         dailyLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL , false);
+        dailyLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL , false);
         daily.setLayoutManager(dailyLayoutManager);
 
         client = APIClient.getInstance();
@@ -92,12 +92,17 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     }
 
     @Override
-    public void onDailyInspireItemClicked(String id) {
+    public void onMealItemClicked(String id) {
        // Toast.makeText(getContext(), "Description will be shown", Toast.LENGTH_SHORT).show();
         Bundle args = new Bundle();
         args.putString("id", id);
         NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
+    }
+
+    @Override
+    public void onFavClicked(Meal meal) {
+        presenter.addToFavourite(meal);
     }
 
     @Override

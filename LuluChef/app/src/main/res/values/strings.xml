@@ -15,4 +15,5 @@
     <string name="ingredient">Ingredient</string>
     <string name="steps">Steps\n</string>
     <string name="area">Area</string>
+    <string name="fav">Favourites 🧡</string>
 </resources>

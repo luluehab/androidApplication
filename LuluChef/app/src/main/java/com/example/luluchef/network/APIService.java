@@ -1,9 +1,12 @@
 package com.example.luluchef.network;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.luluchef.model.Category;
 import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Ingredient;
 import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -42,8 +45,20 @@ public interface APIService {
     Call<NetworkResponse<Meal>> getMealRandom();
 
 
+    //for search
+    @GET("search.php")
+    Call<NetworkResponse<Meal>> getMealByName(@Query("s")String name);
 
+    @GET("search.php")
+    Call<NetworkResponse<Meal>> getMealByFirstChar(@Query("f") String firstChar);
 
+    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    Call<NetworkResponse<Meal>> getMealsByIngredient(@Query("i") String ingredient);
 
+    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    Call<NetworkResponse<Meal>> getMealsByCategory(@Query("c") String category);
+
+    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    Call<NetworkResponse<Meal>> getMealsByCountry(@Query("a") String country);
 
 }

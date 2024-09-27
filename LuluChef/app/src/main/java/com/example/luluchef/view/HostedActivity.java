@@ -1,28 +1,18 @@
 package com.example.luluchef.view;
 
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luluchef.R;
 import com.example.luluchef.R.id;
-import com.example.luluchef.network.NetworkChecking;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.luluchef.network.Testing;
-import java.util.List;
 
 public class HostedActivity extends AppCompatActivity {
 
@@ -30,7 +20,7 @@ public class HostedActivity extends AppCompatActivity {
     public NavController navController;
     private static final String TAG = "HostedActivity";
 
-    private Testing forTest = new Testing();
+    //private Testing forTest = new Testing();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package com.example.luluchef.home.view;
+package com.example.luluchef.favourite.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,46 +8,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.luluchef.R;
+import com.example.luluchef.home.view.DailyAdapter;
+import com.example.luluchef.home.view.HomeOnClickListener;
 import com.example.luluchef.model.Meal;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHolder> {
-
-    private List<Meal> dailyMeal;
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
+    private List<Meal> favMeal;
     private Context context;
-    private HomeOnClickListener onClick;
+    private  FavOnClickListener onClick;
 
-    public DailyAdapter(List<Meal> dailyMeal, Context context, HomeOnClickListener onClick) {
-        this.dailyMeal = dailyMeal;
+    public FavAdapter(List<Meal> favMeal, Context context, FavOnClickListener onClick) {
+        this.favMeal = favMeal;
         this.context = context;
         this.onClick = onClick;
     }
-
     @NonNull
     @Override
-    public DailyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavAdapter.FavViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.meal_item, parent, false);
-        return new DailyViewHolder(view);
+        return new FavViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DailyViewHolder holder, int position) {
-        Meal meal = dailyMeal.get(position);
+    public void onBindViewHolder(@NonNull FavAdapter.FavViewHolder holder, int position) {
+        Meal meal = favMeal.get(position);
         Glide.with(context).load(meal.getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
         holder.mealName.setText(meal.getStrMeal());
         holder.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClick.onFavClicked(meal);
-                Toast.makeText(context, meal.getStrMeal() + " added to favorite", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, meal.getStrMeal() + " removed from favorite", Toast.LENGTH_SHORT).show();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,20 +58,22 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         });
     }
 
-    public void setList(ArrayList<Meal> myList) {
-        this.dailyMeal = myList;
-        notifyDataSetChanged();
-    }
     @Override
     public int getItemCount() {
-        return dailyMeal.size();
+        return favMeal.size() ;
     }
 
-    public class DailyViewHolder extends RecyclerView.ViewHolder {
+    public void setList(ArrayList<Meal> myList) {
+        this.favMeal = myList;
+        notifyDataSetChanged();
+    }
+
+
+    public static class FavViewHolder extends RecyclerView.ViewHolder {
         ImageView mealImg, saveBtn;
         TextView mealName;
 
-        public DailyViewHolder(@NonNull View itemView) {
+        public FavViewHolder(@NonNull View itemView) {
             super(itemView);
             mealImg = itemView.findViewById(R.id.mealImg);
             saveBtn = itemView.findViewById(R.id.btnFav);

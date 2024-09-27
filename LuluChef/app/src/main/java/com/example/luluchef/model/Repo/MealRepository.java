@@ -10,17 +10,20 @@ import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkCallBack;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MealRepository implements MealRepoInterface  {
 
     private static MealRepository instance = null;
     private final LocalSource localSource;
     private final APIClient apiClient;
-
+    private final ExecutorService executorService;
 
     private MealRepository(LocalSource localSource, APIClient apiClientInterface) {
         this.localSource = localSource;
         this.apiClient = apiClientInterface;
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     public static synchronized MealRepository getInstance(LocalSource localSource, APIClient apiClient) {
@@ -33,22 +36,25 @@ public class MealRepository implements MealRepoInterface  {
 
     @Override
     public void insertMealToFavourite(Meal meal) {
-        localSource.insertMeal(meal);
+      executorService.execute(() ->  localSource.insertMeal(meal)) ;
     }
 
     @Override
     public void insertAllFav(List<Meal> meals) {
-        localSource.insertAllFav(meals);
+
+        executorService.execute(() ->  localSource.insertAllFav(meals)) ;
+
     }
 
     @Override
     public void deleteMealFromFavourite(Meal meal) {
-        localSource.deleteMeal(meal);
+        executorService.execute(() ->   localSource.deleteMeal(meal)) ;
+
     }
 
     @Override
     public void deleteAllFavouriteMeals() {
-        localSource.deleteAllMeals();
+        executorService.execute(() ->    localSource.deleteAllMeals());
     }
 
     @Override
@@ -63,12 +69,12 @@ public class MealRepository implements MealRepoInterface  {
 
     @Override
     public void insertMealToCalendar(PlanedMeal meal, String day) {
-        localSource.insertMealToCalendar(meal, day);
+        executorService.execute(() ->    localSource.insertMealToCalendar(meal, day));
     }
 
     @Override
     public void deletePlannedMeal(PlanedMeal meal) {
-        localSource.deletePlannedMeal(meal);
+        executorService.execute(() ->    localSource.deletePlannedMeal(meal));
     }
 
 
