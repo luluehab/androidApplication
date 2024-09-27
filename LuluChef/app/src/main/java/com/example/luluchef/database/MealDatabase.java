@@ -18,7 +18,6 @@ import com.example.luluchef.model.PlanedMeal;
 public abstract class MealDatabase extends RoomDatabase {
     private static MealDatabase instance = null;
     public abstract MealDAO getMealDAO();
-    public abstract PlanedMealDAO getPlanedMealDAO();
     public static synchronized MealDatabase getInstance(Context context){
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(), MealDatabase.class, "mealDb")

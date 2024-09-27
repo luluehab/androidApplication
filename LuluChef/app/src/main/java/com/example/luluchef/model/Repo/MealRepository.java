@@ -1,0 +1,132 @@
+package com.example.luluchef.model.Repo;
+
+import androidx.lifecycle.LiveData;
+
+import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.home.Presenter.HomePresenter;
+import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.PlanedMeal;
+import com.example.luluchef.network.APIClient;
+import com.example.luluchef.network.NetworkCallBack;
+
+import java.util.List;
+
+public class MealRepository implements MealRepoInterface  {
+
+    private static MealRepository instance = null;
+    private final LocalSource localSource;
+    private final APIClient apiClient;
+
+
+    private MealRepository(LocalSource localSource, APIClient apiClientInterface) {
+        this.localSource = localSource;
+        this.apiClient = apiClientInterface;
+    }
+
+    public static synchronized MealRepository getInstance(LocalSource localSource, APIClient apiClient) {
+        if (instance == null) {
+            instance = new MealRepository(localSource, apiClient);
+        }
+        return instance;
+    }
+
+
+    @Override
+    public void insertMealToFavourite(Meal meal) {
+        localSource.insertMeal(meal);
+    }
+
+    @Override
+    public void insertAllFav(List<Meal> meals) {
+        localSource.insertAllFav(meals);
+    }
+
+    @Override
+    public void deleteMealFromFavourite(Meal meal) {
+        localSource.deleteMeal(meal);
+    }
+
+    @Override
+    public void deleteAllFavouriteMeals() {
+        localSource.deleteAllMeals();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getAllFavouriteMeals() {
+        return localSource.getAllMeals();
+    }
+
+    @Override
+    public LiveData<List<PlanedMeal>> getMealsOfDay(String day) {
+        return localSource.getMealsOfDay(day);
+    }
+
+    @Override
+    public void insertMealToCalendar(PlanedMeal meal, String day) {
+        localSource.insertMealToCalendar(meal, day);
+    }
+
+    @Override
+    public void deletePlannedMeal(PlanedMeal meal) {
+        localSource.deletePlannedMeal(meal);
+    }
+
+
+
+    public void getMealByName(String name , NetworkCallBack call) {
+
+        apiClient.getMealByName(name, call);
+
+    }
+
+
+    public void getMealByFirstChar(String firstChar , NetworkCallBack call) {
+         apiClient.getMealByFirstChar(firstChar, call);
+    }
+
+
+    public void getMealById(String id , NetworkCallBack call) {
+         apiClient.getMealById(id, call);
+    }
+
+
+
+    public void getRandomMeal(NetworkCallBack call) {
+         apiClient.getMealRandom(call);
+    }
+
+
+    public void getAllCategories(NetworkCallBack call) {
+         apiClient.getCategoriesList(call);
+    }
+
+
+    public void getAllCountries(NetworkCallBack call) {
+         apiClient.getCountriesList(call);
+    }
+
+
+    public void getAllIngredients(NetworkCallBack call) {
+         apiClient.getIngredientsList(call);
+    }
+
+
+    public void getMealsByIngredient(String ingredient , NetworkCallBack call) {
+         apiClient.getMealByIngredient(ingredient,call);
+    }
+
+
+    public void getMealsByCategory(String category , NetworkCallBack call) {
+         apiClient.getMealByCategory(category,call);
+    }
+
+
+    public void getMealsByCountry(String country , NetworkCallBack call) {
+         apiClient.getMealByArea(country, call);
+    }
+
+
+
+
+}
+
