@@ -92,11 +92,11 @@ public class FavFragment extends Fragment implements FavOnClickListener , FavVie
 
     @Override
     public void onCalClicked(Meal meal) {
-        showCalendarPopup(meal.getIdMeal());
+        showCalendarPopup(meal);
     }
-    private void showCalendarPopup(String mealId) {
+    private void showCalendarPopup(Meal meal) {
         // Create and show the dialog fragment
-        DayFragment dialogFragment = new DayFragment(mealId);
+        DayFragment dialogFragment = new DayFragment(meal);
         dialogFragment.show(getFragmentManager(), "DayFragment");
     }
     @Override

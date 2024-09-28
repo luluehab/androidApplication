@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
@@ -29,27 +30,21 @@ import java.util.List;
 public class DayFragment extends DialogFragment implements PlanView {
 
     CalendarView calendarView ;
-    private Button selectDateButton;
     private Date selectedDate;
     private PlanPresenter presenter;
     private MealRepository repo;
     private LocalSource localSource;
     private APIClient client;
-    private String idMeal;
+    private Meal meal;
 
+    public DayFragment(Meal meal) {
 
-    public DayFragment(String idMeal) {
-
-        this.idMeal = idMeal;
+        this.meal = meal;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            idMeal = getArguments().getString("mealId"); // Receive meal ID from arguments
-        }
-
     }
 
     @Override
@@ -64,11 +59,13 @@ public class DayFragment extends DialogFragment implements PlanView {
         repo = MealRepository.getInstance(localSource , client);
         presenter = new PlanPresenter(this , repo);
         // Set a listener for the calendar view to capture the selected date
+
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, dayOfMonth);
             selectedDate = calendar.getTime();
             saveMealWithDate();  // Save the meal with the selected date
+
         });
 
         return view;
@@ -81,12 +78,15 @@ public class DayFragment extends DialogFragment implements PlanView {
     }
 
     private void saveMealWithDate() {
-        if (selectedDate != null && idMeal != null) {
-            PlanedMeal plannedMeal = new PlanedMeal(idMeal, selectedDate);
+        if (selectedDate != null && meal.getIdMeal() != null) {
+            PlanedMeal plannedMeal = new PlanedMeal(meal.getIdMeal(), selectedDate , meal.getStrMeal(),meal.getStrCategory() , meal.getStrArea() , meal.getStrMealThumb());
             presenter.AddtoPlannedTable(plannedMeal, selectedDate); // Save the planned meal in the database
             Toast.makeText(getContext(), "Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
             // Optionally close the fragment after saving
                 dismiss();
+        }
+        else {
+
         }
     }
 

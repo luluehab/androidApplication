@@ -14,11 +14,52 @@ public class PlanedMeal {
     private String idMeal;
     @ColumnInfo(name = "planned_date")
     private Date date;
+    private String strMeal;
+    private String strCategory;
+    private String strArea;
+    private String strMealThumb;
+
+    public void setStrMeal(String strMeal) {
+        this.strMeal = strMeal;
+    }
+
+    public void setStrCategory(String strCategory) {
+        this.strCategory = strCategory;
+    }
+
+    public void setStrArea(String strArea) {
+        this.strArea = strArea;
+    }
+
+    public void setStrMealThumb(String strMealThumb) {
+        this.strMealThumb = strMealThumb;
+    }
+
+    public String getStrMeal() {
+        return strMeal;
+    }
+
+    public String getStrCategory() {
+        return strCategory;
+    }
+
+    public String getStrArea() {
+        return strArea;
+    }
+
+    public String getStrMealThumb() {
+        return strMealThumb;
+    }
 
     // Constructors, getters, and setters
-    public PlanedMeal(String idMeal, Date date) {
+
+    public PlanedMeal(String idMeal, Date date, String strMeal, String strCategory, String strArea, String strMealThumb) {
         this.idMeal = idMeal;
         this.date = date;
+        this.strMeal = strMeal;
+        this.strCategory = strCategory;
+        this.strArea = strArea;
+        this.strMealThumb = strMealThumb;
     }
 
     public int getId() {

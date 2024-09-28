@@ -5,4 +5,5 @@ import com.example.luluchef.model.PlanedMeal;
 
 public interface onPlanClickListener {
     void onDelClicked(PlanedMeal meal);
+    void onMealItemClicked(String id);
 }

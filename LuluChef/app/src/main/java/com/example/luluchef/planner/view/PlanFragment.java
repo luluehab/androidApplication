@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,5 +76,13 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     @Override
     public void onDelClicked(PlanedMeal meal) {
         presenter.removeFromPlannedTable(meal);
+    }
+
+    @Override
+    public void onMealItemClicked(String id) {
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        NavController navController = Navigation.findNavController(getView());
+        navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
     }
 }
