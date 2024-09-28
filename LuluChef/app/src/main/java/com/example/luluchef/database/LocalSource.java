@@ -13,6 +13,7 @@ import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class LocalSource implements LocalSourceInterface{
@@ -58,13 +59,13 @@ public class LocalSource implements LocalSourceInterface{
     }
 
     @Override
-    public LiveData<List<PlanedMeal>> getMealsOfDay(String day) {
-        return mealDao.getMealsOfDay(day);
+    public LiveData<List<PlanedMeal>> getAllPlannedMeals() {
+        return mealDao.getAllPlannedMeals();
     }
 
     @Override
-    public void insertMealToCalendar(PlanedMeal meal, String day) {
-        meal.setDayOfMeal(day);
+    public void insertMealToCalendar(PlanedMeal meal , Date date) {
+        meal.setDate(date);
         mealDao.insertPLannedMeal(meal);
     }
 

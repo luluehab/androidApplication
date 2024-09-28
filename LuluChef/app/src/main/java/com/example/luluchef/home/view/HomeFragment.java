@@ -19,10 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.model.Category;
+import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.home.Presenter.HomePresenter;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.network.APIClient;
+import com.example.luluchef.planner.Presenter.PlanPresenter;
+import com.example.luluchef.planner.view.DayFragment;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +34,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeOnClickListener,HomeView {
 
-    private RecyclerView daily;
-    private RecyclerView.LayoutManager dailyLayoutManager;
+    private RecyclerView daily,  countries , category;
+    private RecyclerView.LayoutManager dailyLayoutManager,countryLayoutManager ,categoryLayoutManager;
     private TextView txtappName, txtqoute ,txtdaily;
 
     private APIClient client;
@@ -39,18 +43,20 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     private MealRepository repo;
 
     private DailyAdapter dailyAdapter;
+    private CountryAdapter countryAdapter;
+    private CategoryAdapter categoryAdapter;
     private HomePresenter presenter;
     private List<Meal> dailyMeal;
+    private List<Country> countryList;
+    private List<Category> categoryList;
 
-    private Handler handler;
-    private Snackbar snackbar;
-    private boolean mealsLoaded = false;
-    private static final int CHECK_INTERVAL = 500;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dailyMeal = new ArrayList<>();
+        countryList = new ArrayList<>();
+        categoryList = new ArrayList<>();
     }
 
     @Override
@@ -68,9 +74,17 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         txtqoute = view.findViewById(R.id.appquote);
         txtdaily = view.findViewById(R.id.txtInsp);
         daily = view.findViewById(R.id.inspRecycler);
+        countries = view.findViewById(R.id.contRecycler);
+        category = view.findViewById(R.id.cateRecycler);
 
         dailyLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL , false);
         daily.setLayoutManager(dailyLayoutManager);
+
+        countryLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+        countries.setLayoutManager(countryLayoutManager);
+
+        categoryLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+        category.setLayoutManager(categoryLayoutManager);
 
         client = APIClient.getInstance();
         localSource = LocalSource.getInstance(view.getContext());
@@ -78,6 +92,8 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         presenter = new HomePresenter(this , repo );
 
         presenter.loadMeals();
+        presenter.getAllCountries();
+        presenter.getAllCategories();
 
 
 
@@ -98,6 +114,18 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     }
 
     @Override
+    public void onCalClicked(Meal meal) {
+        Toast.makeText(getContext(), "will add Isa", Toast.LENGTH_SHORT).show();
+        showCalendarPopup(meal.getIdMeal());
+    }
+
+    private void showCalendarPopup(String mealId) {
+        // Create and show the dialog fragment
+        DayFragment dialogFragment = new DayFragment(mealId);
+        dialogFragment.show(getFragmentManager(), "DayFragment");
+    }
+
+    @Override
     public void showMeals(List<Meal> meals) {
 
         dailyAdapter = new DailyAdapter(meals ,getContext() , this) ;
@@ -109,6 +137,18 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     @Override
     public void showErr(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCountries(List<Country> country) {
+        countryAdapter = new CountryAdapter(country, getContext());
+        countries.setAdapter(countryAdapter);
+    }
+
+    @Override
+    public void showCategories(List<Category> categories) {
+        categoryAdapter = new CategoryAdapter(categories, getContext() , this);
+        category.setAdapter(categoryAdapter);
     }
 
 

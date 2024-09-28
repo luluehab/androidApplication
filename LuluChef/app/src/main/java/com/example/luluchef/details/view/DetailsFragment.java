@@ -41,7 +41,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
    
     private ImageView mealImg;
     private TextView mealName, mealCountry, mealDesc ;
-   private ImageButton toFav;
+    private ImageButton toFav;
     private DetailOnClick onClick;
     private RecyclerView ingRecyclerView;
     private RecyclerView.LayoutManager detaileLayoutManager;

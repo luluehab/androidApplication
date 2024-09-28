@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/img">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/planmealImg"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img"
+        app:layout_constraintBottom_toTopOf="@id/planIngrediants"
+        app:layout_constraintEnd_toStartOf="@id/planmealCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/planType"
+        app:shapeAppearanceOverlay="@style/rounded_square" />
+
+    <TextView
+        android:id="@+id/planmealName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/lulu"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/planmealCategory"
+        app:layout_constraintEnd_toEndOf="@id/planmealCategory"
+        app:layout_constraintStart_toStartOf="@+id/planmealCategory"
+        app:layout_constraintTop_toTopOf="@+id/planmealImg"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="your Plan here" />
+
+
+    <TextView
+        android:id="@+id/planmealCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/lulu"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/planmealArea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/planmealImg"
+        app:layout_constraintTop_toBottomOf="@+id/planmealName"
+        tools:text="desert" />
+
+    <TextView
+        android:id="@+id/planmealArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+
+        android:textColor="@color/lulu"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/planmealImg"
+        app:layout_constraintEnd_toEndOf="@+id/planmealCategory"
+        app:layout_constraintStart_toStartOf="@+id/planmealCategory"
+        app:layout_constraintTop_toBottomOf="@+id/planmealCategory"
+        tools:text="egypt" />
+
+    <TextView
+        android:id="@+id/planIngrediants"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/gray_400"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/planmealImg"
+        tools:text="your plan here" />
+
+    <TextView
+        android:id="@+id/planType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/planmealImg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="breakfast" />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/delete_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/planType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@+id/planType"
+        app:layout_constraintTop_toTopOf="@+id/planType" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,6 +56,14 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
                 onClick.onMealItemClicked(meal.getIdMeal());
             }
         });
+
+        holder.calBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onCalClicked(meal);
+            }
+        });
+
     }
 
     public void setList(ArrayList<Meal> myList) {
@@ -68,7 +76,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
     }
 
     public class DailyViewHolder extends RecyclerView.ViewHolder {
-        ImageView mealImg, saveBtn;
+        ImageView mealImg, saveBtn, calBtn;
         TextView mealName;
 
         public DailyViewHolder(@NonNull View itemView) {
@@ -76,6 +84,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
             mealImg = itemView.findViewById(R.id.mealImg);
             saveBtn = itemView.findViewById(R.id.btnFav);
             mealName = itemView.findViewById(R.id.mealName);
+            calBtn = itemView.findViewById(R.id.btnCal);
         }
     }
 

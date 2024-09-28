@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -45,6 +46,7 @@ public interface MealDAO {
     @Delete
     void deletePlannedMeal(PlanedMeal meal);
 
-    @Query("SELECT * From planMeal_table WHERE dayOfMeal = :day ")
-    LiveData<List<PlanedMeal>> getMealsOfDay(String day);
+    @Query("SELECT * FROM planMeal_table")
+    LiveData<List<PlanedMeal>> getAllPlannedMeals();
+
 }

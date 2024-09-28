@@ -64,4 +64,5 @@ dependencies {
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
     //circle imageview
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
 }

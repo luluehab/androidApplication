@@ -9,6 +9,7 @@ import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkCallBack;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,13 +65,14 @@ public class MealRepository implements MealRepoInterface  {
 
     @Override
     public LiveData<List<PlanedMeal>> getMealsOfDay(String day) {
-        return localSource.getMealsOfDay(day);
+        return localSource.getAllPlannedMeals();
     }
 
     @Override
-    public void insertMealToCalendar(PlanedMeal meal, String day) {
+    public void insertMealToCalendar(PlanedMeal meal, Date day) {
         executorService.execute(() ->    localSource.insertMealToCalendar(meal, day));
     }
+
 
     @Override
     public void deletePlannedMeal(PlanedMeal meal) {

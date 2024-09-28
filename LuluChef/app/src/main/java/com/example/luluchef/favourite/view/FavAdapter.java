@@ -42,6 +42,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
     public void onBindViewHolder(@NonNull FavAdapter.FavViewHolder holder, int position) {
         Meal meal = favMeal.get(position);
         Glide.with(context).load(meal.getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
+        holder.saveBtn.setImageResource(R.drawable.heart_fill);
         holder.mealName.setText(meal.getStrMeal());
         holder.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

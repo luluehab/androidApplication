@@ -29,6 +29,14 @@ public class HomePresenter implements HomePresenterInterface, NetworkCallBack{
 
     }
 
+    public void getAllCountries() {
+        repo.getAllCountries(this);
+    }
+    public void getAllCategories()
+    {
+        repo.getAllCategories(this);
+    }
+
     @Override
     public void addToFavourite(Meal meal) {
         repo.insertMealToFavourite(meal);
@@ -47,7 +55,7 @@ public class HomePresenter implements HomePresenterInterface, NetworkCallBack{
 
     @Override
     public void onSuccessResultCategory(List<Category> categories) {
-
+        view.showCategories(categories);
     }
 
     @Override
@@ -57,7 +65,7 @@ public class HomePresenter implements HomePresenterInterface, NetworkCallBack{
 
     @Override
     public void onSuccessResultCountries(List<Country> countries) {
-
+        view.showCountries(countries);
     }
 
     @Override
