@@ -24,6 +24,7 @@ import com.example.luluchef.planner.Presenter.PlanPresenter;
 import java.security.PrivateKey;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DayFragment extends DialogFragment implements PlanView {
 
@@ -54,9 +55,6 @@ public class DayFragment extends DialogFragment implements PlanView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-    //    return inflater.inflate(R.layout.fragment_day, container, false);
-
         View view = inflater.inflate(R.layout.fragment_day, container, false);
 
         calendarView = view.findViewById(R.id.calendarView);
@@ -79,16 +77,6 @@ public class DayFragment extends DialogFragment implements PlanView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       /* calendarView = view.findViewById(R.id.calendarView);
-        // Set a listener for the calendar view
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            // Convert the selected date to a Date object
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, dayOfMonth);
-            selectedDate = calendar.getTime();
-            saveMealWithDate(); // Save the meal with the selected date
-
-        });*/
 
     }
 
@@ -97,8 +85,18 @@ public class DayFragment extends DialogFragment implements PlanView {
             PlanedMeal plannedMeal = new PlanedMeal(idMeal, selectedDate);
             presenter.AddtoPlannedTable(plannedMeal, selectedDate); // Save the planned meal in the database
             Toast.makeText(getContext(), "Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
-            // Optionally navigate back or close the fragment after saving
+            // Optionally close the fragment after saving
                 dismiss();
         }
+    }
+
+    @Override
+    public void showMeals(List<PlanedMeal> meals) {
+
+    }
+
+    @Override
+    public void showErr(String error) {
+
     }
 }

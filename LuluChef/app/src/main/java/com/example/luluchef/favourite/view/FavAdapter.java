@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.luluchef.R;
-import com.example.luluchef.home.view.DailyAdapter;
-import com.example.luluchef.home.view.HomeOnClickListener;
 import com.example.luluchef.model.Meal;
 
 import java.util.ArrayList;
@@ -57,6 +55,13 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
                 onClick.onMealItemClicked(meal.getIdMeal());
             }
         });
+
+        holder.calBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onCalClicked(meal);
+            }
+        });
     }
 
     @Override
@@ -71,14 +76,15 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
 
 
     public static class FavViewHolder extends RecyclerView.ViewHolder {
-        ImageView mealImg, saveBtn;
+        ImageView mealImg, saveBtn, calBtn;
         TextView mealName;
 
         public FavViewHolder(@NonNull View itemView) {
             super(itemView);
             mealImg = itemView.findViewById(R.id.mealImg);
             saveBtn = itemView.findViewById(R.id.btnFav);
-            mealName = itemView.findViewById(R.id.mealName);
+            mealName = itemView.findViewById(R.id.plannedmealname);
+            calBtn = itemView.findViewById(R.id.btnCal);
         }
     }
 

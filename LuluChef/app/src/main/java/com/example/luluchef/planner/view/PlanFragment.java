@@ -2,65 +2,77 @@ package com.example.luluchef.planner.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.luluchef.R;
+import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.model.PlanedMeal;
+import com.example.luluchef.model.Repo.MealRepository;
+import com.example.luluchef.network.APIClient;
+import com.example.luluchef.planner.Presenter.PlanPresenter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PlanFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class PlanFragment extends Fragment implements PlanView , onPlanClickListener{
 
-    public PlanFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlanFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlanFragment newInstance(String param1, String param2) {
-        PlanFragment fragment = new PlanFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private RecyclerView plannedRecycler;
+    private PlanAdapter planAdapter;
+    private PlanPresenter presenter;
+    private MealRepository repo;
+    private List<PlanedMeal> plannedMeals;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan, container, false);
+       return inflater.inflate(R.layout.fragment_plan, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        plannedRecycler = view.findViewById(R.id.plannedMealsRecyclerView);
+        plannedRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        repo = MealRepository.getInstance(LocalSource.getInstance(getContext()), APIClient.getInstance());
+        presenter = new PlanPresenter(this, repo);
+
+        presenter.getAllPlannedMeal(); // Fetch meals from the database
+
+    }
+
+    @Override
+    public void showMeals(List<PlanedMeal> meals) {
+        planAdapter = new PlanAdapter(meals,getContext(),this);
+        plannedRecycler.setAdapter(planAdapter);
+    }
+
+    @Override
+    public void showErr(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDelClicked(PlanedMeal meal) {
+        presenter.removeFromPlannedTable(meal);
     }
 }

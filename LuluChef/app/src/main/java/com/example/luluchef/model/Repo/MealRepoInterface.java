@@ -21,7 +21,7 @@ public interface MealRepoInterface {
 
     LiveData<List<Meal>> getAllFavouriteMeals();
 
-    LiveData<List<PlanedMeal>> getMealsOfDay(String day);
+    LiveData<List<PlanedMeal>> getAllPlannedMeals();
 
 
     void insertMealToCalendar(PlanedMeal meal, Date day);

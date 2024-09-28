@@ -115,7 +115,6 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void onCalClicked(Meal meal) {
-        Toast.makeText(getContext(), "will add Isa", Toast.LENGTH_SHORT).show();
         showCalendarPopup(meal.getIdMeal());
     }
 

@@ -5,4 +5,5 @@ import com.example.luluchef.model.Meal;
 public interface FavOnClickListener {
     void onMealItemClicked(String id);
     void onFavClicked(Meal meal);
+    void onCalClicked(Meal meal);
 }

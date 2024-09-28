@@ -8,7 +8,7 @@ import java.util.Date;
 public interface PlanPresenterInterface {
 
     public void AddtoPlannedTable(PlanedMeal meal , Date date) ;
-    public void addToFavourite(Meal meal);
-
+    public void removeFromPlannedTable(PlanedMeal meal);
+    public void getAllPlannedMeal();
 
 }

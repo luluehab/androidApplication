@@ -64,7 +64,7 @@ public class MealRepository implements MealRepoInterface  {
     }
 
     @Override
-    public LiveData<List<PlanedMeal>> getMealsOfDay(String day) {
+    public LiveData<List<PlanedMeal>> getAllPlannedMeals( ) {
         return localSource.getAllPlannedMeals();
     }
 

@@ -83,7 +83,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
             super(itemView);
             mealImg = itemView.findViewById(R.id.mealImg);
             saveBtn = itemView.findViewById(R.id.btnFav);
-            mealName = itemView.findViewById(R.id.mealName);
+            mealName = itemView.findViewById(R.id.plannedmealname);
             calBtn = itemView.findViewById(R.id.btnCal);
         }
     }

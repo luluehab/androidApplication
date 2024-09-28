@@ -25,6 +25,7 @@ import com.example.luluchef.home.view.DailyAdapter;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
+import com.example.luluchef.planner.view.DayFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -89,6 +90,15 @@ public class FavFragment extends Fragment implements FavOnClickListener , FavVie
             presenter.removeFromFavourite(meal);
     }
 
+    @Override
+    public void onCalClicked(Meal meal) {
+        showCalendarPopup(meal.getIdMeal());
+    }
+    private void showCalendarPopup(String mealId) {
+        // Create and show the dialog fragment
+        DayFragment dialogFragment = new DayFragment(mealId);
+        dialogFragment.show(getFragmentManager(), "DayFragment");
+    }
     @Override
     public void showMeals(List<Meal> meals) {
         favAdapter = new FavAdapter(meals,getContext(), this);
