@@ -78,7 +78,7 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
             selectedDate = calendar.getTime();
             //presenter.getMealForDay(selectedDate);
             showMealWithDate();
-            Toast.makeText(getContext(), "LULU Clicked!! ", Toast.LENGTH_SHORT).show();
+
         });
 
 
@@ -87,13 +87,8 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     private void showMealWithDate() {
         if (selectedDate != null) {
             presenter.getAllPlannedMeal(selectedDate);
-            //presenter.getMealForDay(selectedDate);
-            Toast.makeText(getContext(), "Showing Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
-            // Optionally close the fragment after saving
         }
-        else {
 
-        }
     }
 
 

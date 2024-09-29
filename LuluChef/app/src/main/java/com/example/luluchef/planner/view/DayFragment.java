@@ -53,6 +53,8 @@ public class DayFragment extends DialogFragment implements PlanView {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
 
         calendarView = view.findViewById(R.id.calendarView);
+        // Set the minimum selectable date to today's date
+        calendarView.setMinDate(System.currentTimeMillis());
 
         client = APIClient.getInstance();
         localSource = LocalSource.getInstance(view.getContext());
@@ -84,9 +86,6 @@ public class DayFragment extends DialogFragment implements PlanView {
             Toast.makeText(getContext(), "Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
             // Optionally close the fragment after saving
                 dismiss();
-        }
-        else {
-
         }
     }
 

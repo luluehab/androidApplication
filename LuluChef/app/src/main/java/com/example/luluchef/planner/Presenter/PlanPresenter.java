@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class PlanPresenter implements PlanPresenterInterface{
 
-    private static final String TAG = "luluTrack";
+
     private PlanView view;
     private MealRepository repo;
     LiveData<List<PlanedMeal>>  planMealList;
@@ -61,16 +61,11 @@ public class PlanPresenter implements PlanPresenterInterface{
             @Override
             public void onChanged(List<PlanedMeal> meals) {
                 if (meals != null && !meals.isEmpty()) {
-                    // Log the first meal's date for debugging
-                    Log.i(TAG, "onChanged: lulu in Presenter " + meals.get(0).getDate());
-
                     // Filter meals by a specific date (if required)
                     List<PlanedMeal> filteredMeals = filterMealsByDate(meals, selectedDate); // Replace new Date() with your specific date
 
                     // Pass the filtered meals to the view
                     view.showDatemeal(filteredMeals);
-                } else {
-                    Log.i(TAG, "onChanged: No planned meals found");
                 }
             }
         });
@@ -95,12 +90,10 @@ public class PlanPresenter implements PlanPresenterInterface{
     @Override
     public void getMealForDay(Date day) {
         planMealList = repo.getMealForDay(day);
-        Log.i(TAG, "onChanged: lulu in Presenter " + planMealList.getValue());
         planMealList.observeForever(new Observer<List<PlanedMeal>>() {
             @Override
             public void onChanged(List<PlanedMeal> meals) {
                 view.showDatemeal(meals);
-                Log.i(TAG, "onChanged: lulu in Presenter " + meals);
 
             }
         });

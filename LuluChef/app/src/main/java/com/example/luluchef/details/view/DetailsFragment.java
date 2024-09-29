@@ -144,6 +144,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
         });
 
         toFav.setOnClickListener(v -> {
+            toFav.setImageResource(R.drawable.heart_fill);
             detailPresenter.addToFavourite(meal);
             Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
         });

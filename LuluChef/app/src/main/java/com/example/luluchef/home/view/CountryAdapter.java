@@ -45,33 +45,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
          Country country = countryItems.get(position);
 
-       // Glide.with(context).load("https://flagsapi.com/" + country.getImageId() + "/flat/64.png").apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.ImginHome);
-     /*   Glide.with(context)
-                .load("https://flagsapi.com/" + country.getImageId() + "/flat/64.png")
-                .apply(new RequestOptions()
-                        .override(500, 500)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(R.drawable.ic_launcher_foreground))  // Fallback in case of error
-                .into(holder.ImginHome);*/
-
-        /*Glide.with(context)
-                .load("https://flagsapi.com/" + country.getImageId() + "/flat/64.png")
-                .apply(new RequestOptions()
-                        .override(500, 500)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(R.drawable.ic_launcher_foreground))  // Fallback in case of error
-                .into(holder.ImginHome);
-
-        holder.txtName.setText(country.getStrArea());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //onClick.onClick(country);
-                Toast.makeText(v.getContext(), "Country meals will be Show", Toast.LENGTH_SHORT).show();;
-            }
-        });*/
-
         if(position!=26) {
             Glide.with(context).load(flags[position])
                     .apply(new RequestOptions().override(500, 500)
