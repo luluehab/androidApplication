@@ -85,4 +85,9 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
         NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

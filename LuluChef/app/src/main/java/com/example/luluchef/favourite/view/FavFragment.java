@@ -109,4 +109,9 @@ public class FavFragment extends Fragment implements FavOnClickListener , FavVie
     public void showErr(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

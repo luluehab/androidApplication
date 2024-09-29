@@ -150,5 +150,8 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         category.setAdapter(categoryAdapter);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

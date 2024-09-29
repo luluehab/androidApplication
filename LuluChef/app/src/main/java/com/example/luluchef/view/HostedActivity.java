@@ -6,12 +6,17 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.luluchef.R;
 import com.example.luluchef.R.id;
+import com.example.luluchef.favourite.view.FavFragment;
+import com.example.luluchef.home.view.HomeFragment;
+import com.example.luluchef.planner.view.PlanFragment;
+import com.example.luluchef.search.view.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HostedActivity extends AppCompatActivity {
@@ -58,6 +63,29 @@ public class HostedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+        NavController navController = Navigation.findNavController(this, R.id.Hostfragment);
+        if (navController.getCurrentDestination().getId() == R.id.homeFrag) {
+            // If the user is in the HomeFragment, close the app
+            finish();
+        }
+        else if(navController.getCurrentDestination().getId() == id.favFrag)
+        {
+            finish();
+        }
+        else if(navController.getCurrentDestination().getId() == id.searchFrag)
+        {
+            finish();
+        }
+        else if(navController.getCurrentDestination().getId() == id.planFrag)
+        {
+            finish();
+        }
+        else {
+            // Otherwise, just handle the default back action (returning to previous fragments)
+            super.onBackPressed();
+        }
+    }
 }
