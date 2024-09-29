@@ -8,4 +8,5 @@ import java.util.List;
 public interface PlanView {
     void showMeals(List<PlanedMeal> meals);
     void showErr(String error);
+    void showDatemeal(List<PlanedMeal> meals);
 }

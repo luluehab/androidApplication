@@ -12,7 +12,7 @@ public class PlanedMeal {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String idMeal;
-    @ColumnInfo(name = "planned_date")
+    @ColumnInfo(name = "date")
     private Date date;
     private String strMeal;
     private String strCategory;

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
+import com.example.luluchef.planner.Presenter.PlanPresenterInterface;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,8 @@ public interface MealRepoInterface {
     LiveData<List<Meal>> getAllFavouriteMeals();
 
     LiveData<List<PlanedMeal>> getAllPlannedMeals();
+
+    LiveData<List<PlanedMeal>> getMealForDay(Date day);
 
 
     void insertMealToCalendar(PlanedMeal meal, Date day);

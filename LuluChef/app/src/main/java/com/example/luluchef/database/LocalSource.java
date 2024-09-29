@@ -1,6 +1,7 @@
 package com.example.luluchef.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class LocalSource implements LocalSourceInterface{
 
+    private static final String TAG = "luluTrack";
     private static LocalSource instance = null;
     private MealDAO mealDao;
 
@@ -60,7 +62,14 @@ public class LocalSource implements LocalSourceInterface{
 
     @Override
     public LiveData<List<PlanedMeal>> getAllPlannedMeals() {
+        Log.i(TAG, "onChanged: lulu in local  ");
         return mealDao.getAllPlannedMeals();
+    }
+
+    @Override
+    public LiveData<List<PlanedMeal>> getMealForDay(Date day) {
+        Log.i(TAG, "onChanged: lulu in local  " + day);
+        return  mealDao.getMealForDay(day);
     }
 
     @Override

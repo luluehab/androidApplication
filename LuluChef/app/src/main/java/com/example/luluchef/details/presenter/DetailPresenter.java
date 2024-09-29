@@ -1,5 +1,7 @@
 package com.example.luluchef.details.presenter;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.example.luluchef.details.view.DetailsView;
 import com.example.luluchef.model.Category;
 import com.example.luluchef.model.Country;
@@ -9,6 +11,7 @@ import com.example.luluchef.model.MealResponse;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkCallBack;
+import com.example.luluchef.planner.view.DayFragment;
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
     public void addToFavourite(Meal meal) {
         repo.insertMealToFavourite(meal);
     }
+
 
 
     @Override

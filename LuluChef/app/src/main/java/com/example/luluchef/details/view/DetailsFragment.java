@@ -27,6 +27,7 @@ import com.example.luluchef.model.IngredientModel;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
+import com.example.luluchef.planner.view.DayFragment;
 import com.example.luluchef.view.HostedActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -147,6 +148,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
             Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
         });
 
+
         ArrayList<IngredientModel> ingredientPojos = getIngList(meal);
         ingrediantAdaptor.setList(ingredientPojos);
         ingrediantAdaptor.notifyDataSetChanged();
@@ -196,4 +198,11 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
         detailPresenter.addToFavourite(meal);
 
     }
+
+    @Override
+    public void ovCalClicked(Meal meal) {
+
+    }
+
+
 }

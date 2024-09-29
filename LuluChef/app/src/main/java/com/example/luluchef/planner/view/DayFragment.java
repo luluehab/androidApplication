@@ -99,4 +99,9 @@ public class DayFragment extends DialogFragment implements PlanView {
     public void showErr(String error) {
 
     }
+
+    @Override
+    public void showDatemeal(List<PlanedMeal> meals) {
+
+    }
 }

@@ -9,6 +9,7 @@ public interface PlanPresenterInterface {
 
     public void AddtoPlannedTable(PlanedMeal meal , Date date) ;
     public void removeFromPlannedTable(PlanedMeal meal);
-    public void getAllPlannedMeal();
+    public void getAllPlannedMeal(Date selectedDate);
+    public void getMealForDay(Date day);
 
 }

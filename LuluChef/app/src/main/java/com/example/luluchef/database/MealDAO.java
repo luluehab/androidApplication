@@ -17,9 +17,6 @@ import java.util.List;
 @Dao
 public interface MealDAO {
 
-   // @Query("SELECT * FROM meals_table")
-   // LiveData<List<Meal>> getMeals();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMeal(Meal meal);
 
@@ -34,6 +31,9 @@ public interface MealDAO {
 
     @Query("SELECT * FROM meals_table WHERE idMeal = :id LIMIT 1")
     Meal getMealById(String id);
+
+    @Query("SELECT * FROM planMeal_table WHERE date = :day")
+    LiveData<List<PlanedMeal>> getMealForDay(Date day);
 
 
     @Query("SELECT * FROM meals_table")

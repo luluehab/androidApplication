@@ -70,19 +70,20 @@
             app:layout_constraintTop_toBottomOf="@+id/detMealName" />
 
         <!-- ImageButton on the top right corner of the image -->
+
+        <!-- Remaining layout as per original structure -->
+
         <ImageButton
             android:id="@+id/detailsAddToFav"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:paddingHorizontal="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingHorizontal="8dp"
             android:src="@drawable/favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/detailsImageView" />
-
-        <!-- Remaining layout as per original structure -->
 
         <TextView
             android:id="@+id/detailsDescriptionOfmeal"

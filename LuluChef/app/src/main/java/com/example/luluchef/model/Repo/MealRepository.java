@@ -1,5 +1,8 @@
 package com.example.luluchef.model.Repo;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.luluchef.database.LocalSource;
@@ -16,6 +19,7 @@ import java.util.concurrent.Executors;
 
 public class MealRepository implements MealRepoInterface  {
 
+    private static final String TAG = "luluTrack";
     private static MealRepository instance = null;
     private final LocalSource localSource;
     private final APIClient apiClient;
@@ -65,7 +69,14 @@ public class MealRepository implements MealRepoInterface  {
 
     @Override
     public LiveData<List<PlanedMeal>> getAllPlannedMeals( ) {
+        Log.i(TAG, "onChanged: lulu in Repo " );
         return localSource.getAllPlannedMeals();
+    }
+
+    @Override
+    public LiveData<List<PlanedMeal>> getMealForDay(Date day) {
+        Log.i(TAG, "onChanged: lulu in Repo " + day);
+        return localSource.getMealForDay(day);
     }
 
     @Override

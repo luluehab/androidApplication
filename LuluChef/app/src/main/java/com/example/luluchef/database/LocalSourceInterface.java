@@ -18,7 +18,7 @@ public interface LocalSourceInterface {
 
     LiveData<List<Meal>> getAllMeals();
     LiveData<List<PlanedMeal>> getAllPlannedMeals();
-
+    LiveData<List<PlanedMeal>> getMealForDay(Date day);
     void insertMealToCalendar(PlanedMeal meal , Date date);
 
     Meal getMealById(String id);

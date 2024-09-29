@@ -13,26 +13,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.favourite.Presenter.FavPresenter;
 import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.planner.Presenter.PlanPresenter;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 public class PlanFragment extends Fragment implements PlanView , onPlanClickListener{
 
-
     private RecyclerView plannedRecycler;
+    private RecyclerView.LayoutManager planLayoutManager;
     private PlanAdapter planAdapter;
+    private CalendarView calendarView;
+    private APIClient client;
+    private LocalSource localSource;
     private PlanPresenter presenter;
     private MealRepository repo;
     private List<PlanedMeal> plannedMeals;
+    private Date selectedDate;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,25 +61,56 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        plannedRecycler = view.findViewById(R.id.plannedMealsRecyclerView);
+        plannedRecycler = view.findViewById(R.id.planrecycler);
+        planLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL , false);
+        plannedRecycler.setLayoutManager(planLayoutManager);
+        calendarView = view.findViewById(R.id.Plancalendar);
         plannedRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        repo = MealRepository.getInstance(LocalSource.getInstance(getContext()), APIClient.getInstance());
-        presenter = new PlanPresenter(this, repo);
+        client = APIClient.getInstance();
+        localSource = LocalSource.getInstance(view.getContext());
+        repo = MealRepository.getInstance(localSource , client);
+        presenter = new PlanPresenter (this , repo );
 
-        presenter.getAllPlannedMeal(); // Fetch meals from the database
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth);
+            selectedDate = calendar.getTime();
+            //presenter.getMealForDay(selectedDate);
+            showMealWithDate();
+            Toast.makeText(getContext(), "LULU Clicked!! ", Toast.LENGTH_SHORT).show();
+        });
+
 
     }
 
+    private void showMealWithDate() {
+        if (selectedDate != null) {
+            presenter.getAllPlannedMeal(selectedDate);
+            //presenter.getMealForDay(selectedDate);
+            Toast.makeText(getContext(), "Showing Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
+            // Optionally close the fragment after saving
+        }
+        else {
+
+        }
+    }
+
+
     @Override
     public void showMeals(List<PlanedMeal> meals) {
-        planAdapter = new PlanAdapter(meals,getContext(),this);
-        plannedRecycler.setAdapter(planAdapter);
+
     }
 
     @Override
     public void showErr(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDatemeal(List<PlanedMeal> meals) {
+        planAdapter = new PlanAdapter(meals,getContext(),this);
+        plannedRecycler.setAdapter(planAdapter);
     }
 
     @Override
