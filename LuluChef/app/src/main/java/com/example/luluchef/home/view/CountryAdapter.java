@@ -24,12 +24,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     private List<Country> countryItems;
     private Context context;
     private OnCountryClick onClick;
+    private String [] flags;
 
 
     public CountryAdapter(List<Country> countryItems, Context context) {
         this.countryItems = countryItems;
         this.context = context;
-        //this.onClick = onClick;
+        flags = context.getResources().getStringArray(R.array.countryflags);
     }
 
     @NonNull
@@ -52,7 +53,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
                         .error(R.drawable.ic_launcher_foreground))  // Fallback in case of error
                 .into(holder.ImginHome);*/
 
-        Glide.with(context)
+        /*Glide.with(context)
                 .load("https://flagsapi.com/" + country.getImageId() + "/flat/64.png")
                 .apply(new RequestOptions()
                         .override(500, 500)
@@ -68,7 +69,23 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
                 //onClick.onClick(country);
                 Toast.makeText(v.getContext(), "Country meals will be Show", Toast.LENGTH_SHORT).show();;
             }
+        });*/
+
+        if(position!=26) {
+            Glide.with(context).load(flags[position])
+                    .apply(new RequestOptions().override(500, 500)
+                            .error(R.drawable.ic_launcher_foreground)).into(holder.ImginHome);
+        }
+        holder.txtName.setText(country.getStrArea());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onClick.onClick(country);
+                Toast.makeText(v.getContext(), "Country meals will be Show", Toast.LENGTH_SHORT).show();;
+            }
+
         });
+
     }
 
     public void setList(ArrayList<Country> myList) {

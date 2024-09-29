@@ -3,6 +3,7 @@ package com.example.luluchef.network;
 import androidx.lifecycle.LiveData;
 
 import com.example.luluchef.model.Category;
+import com.example.luluchef.model.CategoryResponse;
 import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Ingredient;
 import com.example.luluchef.model.Meal;
@@ -15,8 +16,8 @@ import retrofit2.http.Query;
 public interface APIService {
 
     // for Category
-    @GET("list.php?c=list")
-    Call<NetworkResponse<Category>> getCategoriesList();
+    @GET("categories.php")
+    Call<CategoryResponse> getCategoriesList();
     @GET("filter.php")
     Call<NetworkResponse<Meal>> getMealByCategory(@Query("c") String category);
 

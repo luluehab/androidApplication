@@ -1,6 +1,7 @@
 package com.example.luluchef.network;
 
 import com.example.luluchef.model.Category;
+import com.example.luluchef.model.CategoryResponse;
 import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Ingredient;
 import com.example.luluchef.model.Meal;
@@ -64,19 +65,19 @@ public class APIClient implements APIClientInterface {
 
     @Override
     public void getCategoriesList(NetworkCallBack callback){
-        Call<NetworkResponse<Category>> call = apiService.getCategoriesList();
-        call.enqueue(new Callback<NetworkResponse<Category>>() {
+        Call<CategoryResponse> call = apiService.getCategoriesList();
+        call.enqueue(new Callback<CategoryResponse>() {
             @Override
-            public void onResponse(Call<NetworkResponse<Category>> call, Response<NetworkResponse<Category>> response) {
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccessResultCategory(response.body().meals);
+                    callback.onSuccessResultCategory(response.body().getCategories());
                 } else {
                     callback.onFailure("Failed to get categories");
                 }
             }
 
             @Override
-            public void onFailure(Call<NetworkResponse<Category>> call, Throwable throwable) {
+            public void onFailure(Call<CategoryResponse> call, Throwable throwable) {
                 callback.onFailure(throwable.getMessage());
             }
         });
