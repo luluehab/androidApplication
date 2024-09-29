@@ -17,6 +17,7 @@
     <string name="area">Area</string>
     <string name="fav">Favourites 🧡</string>
     <string name="setday">Set The Day</string>
+    <string name="MealsList">Meals List</string>
 
 
     <string-array name="countryflags">

@@ -16,6 +16,9 @@
     <action
         android:id="@+id/action_currentFragment_to_calendarFragment"
         app:destination="@id/calender" />
+    <action
+        android:id="@+id/action_homeFrag_to_mealsFrag"
+        app:destination="@id/mealFrag" />
 
     <fragment
         android:id="@+id/searchFrag"
@@ -44,7 +47,11 @@
         android:name="com.example.luluchef.planner.view.DayFragment"
         android:label="calenderDetails"
         tools:layout="@layout/fragment_day"/>
-
+    <fragment
+        android:id="@+id/mealFrag"
+        android:name="com.example.luluchef.meals.view.MealFragment"
+        android:label="Meal Recipe"
+        tools:layout="@layout/fragment_meal" />
 
 
 </navigation>

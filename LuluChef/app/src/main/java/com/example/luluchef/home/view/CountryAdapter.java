@@ -23,13 +23,14 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     private List<Country> countryItems;
     private Context context;
-    private OnCountryClick onClick;
+    private HomeOnClickListener onClick;
     private String [] flags;
 
 
-    public CountryAdapter(List<Country> countryItems, Context context) {
+    public CountryAdapter(List<Country> countryItems, Context context, HomeOnClickListener onClick) {
         this.countryItems = countryItems;
         this.context = context;
+        this.onClick = onClick;
         flags = context.getResources().getStringArray(R.array.countryflags);
     }
 
@@ -80,8 +81,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onClick.onClick(country);
-                Toast.makeText(v.getContext(), "Country meals will be Show", Toast.LENGTH_SHORT).show();;
+                onClick.onCountryItemClicked(country);
             }
 
         });
@@ -110,7 +110,5 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         }
     }
 
-    interface OnCountryClick {
-        void onClick(Country country);
-    }
+
 }

@@ -118,6 +118,25 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         showCalendarPopup(meal);
     }
 
+    @Override
+    public void onCategoryItemClicked(Category category) {
+        Bundle args = new Bundle();
+        args.putString("filter", category.getStrCategory());
+        args.putString("filterType", "category");
+        NavController navController = Navigation.findNavController(getView());
+        navController.navigate(R.id.action_homeFrag_to_mealsFrag, args);
+    }
+
+    @Override
+    public void onCountryItemClicked(Country country) {
+        Bundle args = new Bundle();
+        args.putString("filter", country.getStrArea());
+        args.putString("filterType", "country");
+        NavController navController = Navigation.findNavController(getView());
+        navController.navigate(R.id.action_homeFrag_to_mealsFrag, args);
+
+    }
+
     private void showCalendarPopup(Meal meal) {
         // Create and show the dialog fragment
         DayFragment dialogFragment = new DayFragment(meal);
@@ -140,7 +159,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void showCountries(List<Country> country) {
-        countryAdapter = new CountryAdapter(country, getContext());
+        countryAdapter = new CountryAdapter(country, getContext(), this);
         countries.setAdapter(countryAdapter);
     }
 

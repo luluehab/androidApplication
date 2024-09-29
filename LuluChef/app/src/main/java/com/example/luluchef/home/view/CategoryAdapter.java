@@ -55,8 +55,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // onClick.OnCategoryClick(category);
-                Toast.makeText(v.getContext(), "category meals will be Show", Toast.LENGTH_SHORT).show();;
+                onClick.onCategoryItemClicked(category);
             }
         });
 
