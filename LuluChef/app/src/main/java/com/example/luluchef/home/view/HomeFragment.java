@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
+import com.example.luluchef.favourite.view.FavFragment;
 import com.example.luluchef.model.Category;
 import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Repo.MealRepository;
@@ -27,13 +29,20 @@ import com.example.luluchef.model.Meal;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.planner.Presenter.PlanPresenter;
 import com.example.luluchef.planner.view.DayFragment;
+import com.example.luluchef.planner.view.PlanFragment;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.DialogInterface;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 
 public class HomeFragment extends Fragment implements HomeOnClickListener,HomeView {
 
+    private AlertDialog networkAlertDialog;
     private RecyclerView daily,  countries , category;
     private RecyclerView.LayoutManager dailyLayoutManager,countryLayoutManager ,categoryLayoutManager;
     private TextView txtappName, txtqoute ,txtdaily;
@@ -49,6 +58,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
     private List<Meal> dailyMeal;
     private List<Country> countryList;
     private List<Category> categoryList;
+
 
 
     @Override
@@ -143,6 +153,49 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         dialogFragment.show(getFragmentManager(), "DayFragment");
     }
 
+
+
+    private void showNoNetworkPopup() {
+
+        if (networkAlertDialog != null && networkAlertDialog.isShowing()) {
+            return; // Prevent creating a new dialog if one is already shown
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("No Network")
+                .setMessage("Please check your connection.")
+                .setPositiveButton("Go to Favorites", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Navigate to Favorite Fragment
+                        NavController navController = Navigation.findNavController(getView());
+                        navController.navigate(R.id.action_homeFrag_to_favFrag);
+                       // navigateToFragment(new FavFragment());
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Go to Calendar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Navigate to Calendar Fragment
+                        //navigateToFragment(new PlanFragment());
+                        NavController navController = Navigation.findNavController(getView());
+                        navController.navigate(R.id.action_currentFragment_to_calendarFragment);
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(false); // Prevent dialog from being dismissed on outside touch
+
+        networkAlertDialog = builder.create();
+        networkAlertDialog.show();
+
+    }
+    private void navigateToFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.Hostfragment, fragment); // Use your actual container ID
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
     @Override
     public void showMeals(List<Meal> meals) {
 
@@ -154,8 +207,8 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void showErr(String error) {
-
-        Toast.makeText(getContext(), "No Network", Toast.LENGTH_SHORT).show();
+        showNoNetworkPopup();
+        //Toast.makeText(getContext(), "No Network", Toast.LENGTH_SHORT).show();
     }
 
     @Override

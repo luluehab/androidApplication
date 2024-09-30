@@ -46,6 +46,9 @@ public class FavFragment extends Fragment implements FavOnClickListener , FavVie
     private List<Meal> favMeal;
 
 
+    public FavFragment() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

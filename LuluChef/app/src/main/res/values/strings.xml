@@ -19,6 +19,10 @@
     <string name="fav">Favourites 🧡</string>
     <string name="setday">Set The Day</string>
     <string name="MealsList">Meals List</string>
+    <string name="nonetwork">No Network</string>
+    <string name="nonetmsg">Your device has no network. Please check your settings.</string>
+    <string name="searchhere">search here\n</string>
+    <string name="searching">serch</string>
 
 
     <string-array name="countryflags">

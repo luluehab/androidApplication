@@ -2,21 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/searchFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".search.view.SearchFragment">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SearchView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+    <!-- Search EditText -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:hint="@string/searchhere"
+        android:padding="10dp"
+        android:textColor="@color/gray_400"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toStartOf="@+id/filterIcon"
+        app:layout_constraintHeight_default="wrap" />
+
+    <!-- Filter Icon (ImageView) -->
+    <ImageView
+        android:id="@+id/filterIcon"
+        android:layout_width="55dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/filter"
+        app:layout_constraintBottom_toBottomOf="@id/etSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Null TextView in Search -->
+    <TextView
+        android:id="@+id/nullTextViewInsearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:text="@string/searchhere"
+        android:textColor="@color/gray_400"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- RecyclerView for search results -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/meal_item" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

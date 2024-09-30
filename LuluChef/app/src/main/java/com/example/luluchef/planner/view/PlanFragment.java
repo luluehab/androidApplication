@@ -46,6 +46,9 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     private List<PlanedMeal> plannedMeals;
     private Date selectedDate;
 
+    public PlanFragment() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
