@@ -1,11 +1,13 @@
 package com.example.luluchef.planner.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,16 +41,16 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
         PlanedMeal meal = plannedMeals.get(position);
-
-        holder.mealName.setText(meal.getStrMeal());
+        holder.mealName.setText(meal.getMeal().getStrMeal());
         holder.mealDate.setText(meal.getDate().toString());// Format the date if needed
-        holder.mealType.setText(meal.getStrCategory());
-        holder.mealArea.setText(meal.getStrArea());
-        Glide.with(context).load(meal.getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
+        holder.mealType.setText(meal.getMeal().getStrCategory());
+        holder.mealArea.setText(meal.getMeal().getStrArea());
+        Glide.with(context).load(meal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 onClick.onDelClicked(meal);
             }
         });

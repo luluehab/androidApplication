@@ -81,6 +81,7 @@ public class FavFragment extends Fragment implements FavOnClickListener , FavVie
     public void onMealItemClicked(String id) {
         Bundle args = new Bundle();
         args.putString("id", id);
+        args.putString("from", "Fav");
         NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
     }

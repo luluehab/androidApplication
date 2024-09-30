@@ -1,5 +1,7 @@
 package com.example.luluchef.planner.view;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import java.util.List;
 
 
 public class PlanFragment extends Fragment implements PlanView , onPlanClickListener{
+
 
     private RecyclerView plannedRecycler;
     private RecyclerView.LayoutManager planLayoutManager;
@@ -81,7 +85,6 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
         });
 
-
     }
 
     private void showMealWithDate() {
@@ -115,8 +118,10 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
     @Override
     public void onMealItemClicked(String id) {
+        Log.i(TAG, "onMealItemClicked: " + id);
         Bundle args = new Bundle();
         args.putString("id", id);
+        args.putString("from", "Plan");
         NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
     }

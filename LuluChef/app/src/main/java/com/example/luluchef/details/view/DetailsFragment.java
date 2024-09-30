@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.example.luluchef.database.LocalSource;
 import com.example.luluchef.details.presenter.DetailPresenter;
 import com.example.luluchef.model.IngredientModel;
 import com.example.luluchef.model.Meal;
+import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.planner.view.DayFragment;
@@ -39,7 +42,7 @@ import java.util.ArrayList;
 
 public class DetailsFragment extends Fragment implements DetailsView , DetailOnClick {
 
-   
+
     private ImageView mealImg;
     private TextView mealName, mealCountry, mealDesc ;
     private ImageButton toFav;
@@ -103,8 +106,10 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
 
         if (getArguments() != null) {
             String id = getArguments().getString("id");
+            String from = getArguments().getString("from");
             if (id != null) {
-                detailPresenter.loadMealsInDetails(id);
+
+                    detailPresenter.loadMealsInDetails(id , from);
             }
         }
 
@@ -133,7 +138,6 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
             videoString = "";
         }
 
-
         youTubePlayer.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -149,11 +153,12 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
             Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
         });
 
-
         ArrayList<IngredientModel> ingredientPojos = getIngList(meal);
         ingrediantAdaptor.setList(ingredientPojos);
         ingrediantAdaptor.notifyDataSetChanged();
     }
+
+
 
     private ArrayList<IngredientModel> getIngList(Meal meal) {
         ArrayList<IngredientModel> ingList = new ArrayList<>();
@@ -167,7 +172,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
                 }
             } catch (NoSuchMethodException  | InvocationTargetException | IllegalAccessException e )
             {
-               // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
 
         }
@@ -175,9 +180,10 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
             return ingList;
     }
 
+
     @Override
     public void showErr(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "No Network", Toast.LENGTH_SHORT).show();
     }
 
     @Override

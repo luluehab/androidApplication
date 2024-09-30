@@ -1,6 +1,10 @@
 package com.example.luluchef.details.presenter;
 
-import androidx.fragment.app.FragmentManager;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.luluchef.details.view.DetailsView;
 import com.example.luluchef.model.Category;
@@ -8,16 +12,26 @@ import com.example.luluchef.model.Country;
 import com.example.luluchef.model.Ingredient;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.MealResponse;
+import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.model.Repo.MealRepository;
-import com.example.luluchef.network.APIClient;
 import com.example.luluchef.network.NetworkCallBack;
-import com.example.luluchef.planner.view.DayFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailPresenter implements DetailPresenterInterface , NetworkCallBack {
+
+
+
     private final DetailsView view;
     private final MealRepository repo;
+    private String id ;
+    private String from;
+    LiveData<Meal> favMeal;
+    LiveData<List<PlanedMeal>> planMeal;
     public DetailPresenter(DetailsView view , MealRepository repo) {
         this.view = view;
         this.repo = repo;
@@ -25,18 +39,49 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
 
 
     @Override
-    public void loadMealsInDetails(String id) {
-
+    public void loadMealsInDetails(String id , String from) {
+        this.id = id;
+        this.from = from;
         repo.getMealById(id , this);
-
     }
 
+    @Override
+    public void loadMealFavDatabase(String id) {
+        favMeal =repo.getFavMealById(id);
+        favMeal.observeForever(new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meals) {
+                view.showDetails(meals);
+            }
+        });
+    }
+
+    @Override
+    public void loadMealPlanDatabase(String id) {
+
+        planMeal = repo.getAllPlannedMeals();
+        planMeal.observeForever(new Observer<List<PlanedMeal>>() {
+            @Override
+            public void onChanged(List<PlanedMeal> planedMeals) {
+                if (planedMeals != null && !planedMeals.isEmpty()) {
+                    // Filter meals by a specific date (if required)
+
+                    for (PlanedMeal plannedMeal : planedMeals) {
+                        if (plannedMeal.getIdMeal().equals(id)){
+                            view.showDetails(plannedMeal.getMeal());
+                        }
+                    }
+                }
+            }
+        });
+    }
 
 
     @Override
     public void addToFavourite(Meal meal) {
         repo.insertMealToFavourite(meal);
     }
+
 
 
 
@@ -67,6 +112,17 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
 
     @Override
     public void onFailure(String error) {
-        view.showErr(error);
+
+
+        if (from == "Plan")
+        {
+            loadMealPlanDatabase(id);
+        }
+        else if(from == "Fav")
+        {
+            loadMealFavDatabase(id);
+        }
+            view.showErr(error);
+
     }
 }

@@ -154,7 +154,8 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void showErr(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getContext(), "No Network", Toast.LENGTH_SHORT).show();
     }
 
     @Override

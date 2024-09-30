@@ -25,6 +25,7 @@ public class MealRepository implements MealRepoInterface  {
     private final APIClient apiClient;
     private final ExecutorService executorService;
 
+    private Meal meal;
     private MealRepository(LocalSource localSource, APIClient apiClientInterface) {
         this.localSource = localSource;
         this.apiClient = apiClientInterface;
@@ -63,9 +64,20 @@ public class MealRepository implements MealRepoInterface  {
     }
 
     @Override
+    public LiveData<Meal> getFavMealById(String id) {
+        return localSource.getMealById(id);
+    }
+
+    @Override
+    public LiveData<PlanedMeal> getPlanMealById(String id) {
+        return localSource.getPlanMealById(id);
+    }
+
+    @Override
     public LiveData<List<Meal>> getAllFavouriteMeals() {
         return localSource.getAllMeals();
     }
+
 
     @Override
     public LiveData<List<PlanedMeal>> getAllPlannedMeals( ) {
@@ -83,6 +95,7 @@ public class MealRepository implements MealRepoInterface  {
     public void insertMealToCalendar(PlanedMeal meal, Date day) {
         executorService.execute(() ->    localSource.insertMealToCalendar(meal, day));
     }
+
 
 
     @Override

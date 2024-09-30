@@ -30,7 +30,10 @@ public interface MealDAO {
     void deleteAllMeals();
 
     @Query("SELECT * FROM meals_table WHERE idMeal = :id LIMIT 1")
-    Meal getMealById(String id);
+    LiveData<Meal> getMealById(String id);
+
+    @Query("SELECT * FROM planMeal_table WHERE idMeal = :id LIMIT 1")
+    LiveData<PlanedMeal> getPlanMealById(String id);
 
     @Query("SELECT * FROM planMeal_table WHERE date = :day")
     LiveData<List<PlanedMeal>> getMealForDay(Date day);

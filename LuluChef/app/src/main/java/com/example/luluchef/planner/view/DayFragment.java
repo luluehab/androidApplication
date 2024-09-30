@@ -1,5 +1,7 @@
 package com.example.luluchef.planner.view;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,9 +84,10 @@ public class DayFragment extends DialogFragment implements PlanView {
 
     private void saveMealWithDate() {
         if (selectedDate != null && meal.getIdMeal() != null) {
-            PlanedMeal plannedMeal = new PlanedMeal(meal.getIdMeal(), selectedDate , meal.getStrMeal(),meal.getStrCategory() , meal.getStrArea() , meal.getStrMealThumb());
+            PlanedMeal plannedMeal = new PlanedMeal(meal,selectedDate , meal.getIdMeal());
             presenter.AddtoPlannedTable(plannedMeal, selectedDate); // Save the planned meal in the database
-            Toast.makeText(getContext(), "Meal saved for " + selectedDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Meal saved for " + meal.getIdMeal(), Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "saveMealWithDate: " + meal.getIdMeal());
             // Optionally close the fragment after saving
                 dismiss();
         }

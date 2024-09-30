@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
 
-@Database(entities = {Meal.class, PlanedMeal.class},version = 4)
+@Database(entities = {Meal.class, PlanedMeal.class},version = 6)
 @TypeConverters({Converters.class})  // Add this line
 public abstract class MealDatabase extends RoomDatabase {
     private static MealDatabase instance = null;
@@ -23,9 +23,10 @@ public abstract class MealDatabase extends RoomDatabase {
     public static synchronized MealDatabase getInstance(Context context){
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(), MealDatabase.class, "mealDb")
-                    .fallbackToDestructiveMigrationFrom(3, 4)
+                    .fallbackToDestructiveMigration()
                     .build();
         }
+        //.fallbackToDestructiveMigrationFrom(5, 6)
         return instance;
     }
 }

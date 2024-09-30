@@ -20,6 +20,8 @@ public interface MealRepoInterface {
 
     void deleteAllFavouriteMeals();
 
+    LiveData<Meal>  getFavMealById(String id);
+    LiveData<PlanedMeal> getPlanMealById(String id);
     LiveData<List<Meal>> getAllFavouriteMeals();
 
     LiveData<List<PlanedMeal>> getAllPlannedMeals();

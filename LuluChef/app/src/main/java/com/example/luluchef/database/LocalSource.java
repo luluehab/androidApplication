@@ -19,7 +19,7 @@ import java.util.List;
 
 public class LocalSource implements LocalSourceInterface{
 
-
+    private static final String TAG = "local";
     private static LocalSource instance = null;
     private MealDAO mealDao;
 
@@ -33,7 +33,6 @@ public class LocalSource implements LocalSourceInterface{
         }
         return instance;
     }
-
 
     @Override
     public void insertMeal(Meal meal) {
@@ -79,8 +78,13 @@ public class LocalSource implements LocalSourceInterface{
     }
 
     @Override
-    public Meal getMealById(String id) {
-        return mealDao.getMealById(id);
+    public LiveData<Meal> getMealById(String id) {
+        return  mealDao.getMealById(id);
+    }
+
+    @Override
+    public LiveData<PlanedMeal> getPlanMealById(String id) {
+        return mealDao.getPlanMealById(id);
     }
 
     @Override
