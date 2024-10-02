@@ -110,8 +110,23 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
     @Override
     public void showDatemeal(List<PlanedMeal> meals) {
-        planAdapter = new PlanAdapter(meals,getContext(),this);
-        plannedRecycler.setAdapter(planAdapter);
+
+        /*if (planAdapter != null)
+        {
+            planAdapter.clearMeals();
+        }*/
+
+        if(planAdapter == null)
+        {
+            planAdapter = new PlanAdapter(meals,getContext(),this);
+            plannedRecycler.setAdapter(planAdapter);
+        }
+        else
+        {
+            planAdapter.updateMeals(meals);
+        }
+
+
     }
 
     @Override

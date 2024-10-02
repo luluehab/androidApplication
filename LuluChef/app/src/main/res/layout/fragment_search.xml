@@ -7,36 +7,31 @@
     android:background="@color/white"
     tools:context=".search.view.SearchFragment">
 
-    <!-- Search EditText -->
-    <EditText
-        android:id="@+id/etSearch"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:hint="@string/searchhere"
-        android:padding="10dp"
-        android:textColor="@color/gray_400"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/filterIcon"
-        app:layout_constraintHeight_default="wrap" />
 
     <!-- Filter Icon (ImageView) -->
+
+    <SearchView
+        android:id="@+id/etSearch"
+        android:layout_width="327dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Null TextView in Search -->
+
     <ImageView
-        android:id="@+id/filterIcon"
-        android:layout_width="55dp"
-        android:layout_height="47dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/filterImg"
+        android:layout_width="57dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/filter"
-        app:layout_constraintBottom_toBottomOf="@id/etSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Null TextView in Search -->
     <TextView
         android:id="@+id/nullTextViewInsearch"
         android:layout_width="wrap_content"
@@ -54,13 +49,13 @@
     <!-- RecyclerView for search results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="410dp"
+        android:layout_height="664dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/etSearch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
         tools:listitem="@layout/meal_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

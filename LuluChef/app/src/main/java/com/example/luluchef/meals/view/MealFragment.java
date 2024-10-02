@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.luluchef.R;
 import com.example.luluchef.database.LocalSource;
@@ -86,7 +87,7 @@ public class MealFragment extends Fragment implements onMealClick, mealView {
 
     @Override
     public void showErr(String error) {
-
+        Toast.makeText(getContext(), "no network", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -45,7 +45,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
 
     private ImageView mealImg;
     private TextView mealName, mealCountry, mealDesc ;
-    private ImageButton toFav;
+    private ImageButton toFav, toCal;
     private DetailOnClick onClick;
     private RecyclerView ingRecyclerView;
     private RecyclerView.LayoutManager detaileLayoutManager;
@@ -90,6 +90,7 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
         mealCountry= view.findViewById(R.id.detCountryName);
         mealDesc = view.findViewById(R.id.detailsDescriptionOfmeal);
         toFav = view.findViewById(R.id.detailsAddToFav);
+        toCal = view.findViewById(R.id.detailsAddToCal);
         ingRecyclerView = view.findViewById(R.id.detailsIngredientRecycler);
         youTubePlayer = view.findViewById(R.id.youtubePlayer);
         detaileLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL , false);
@@ -151,6 +152,11 @@ public class DetailsFragment extends Fragment implements DetailsView , DetailOnC
             toFav.setImageResource(R.drawable.heart_fill);
             detailPresenter.addToFavourite(meal);
             Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
+        });
+
+        toCal.setOnClickListener(v -> {
+            DayFragment dialogFragment = new DayFragment(meal);
+            dialogFragment.show(getFragmentManager(), "DayFragment");
         });
 
         ArrayList<IngredientModel> ingredientPojos = getIngList(meal);

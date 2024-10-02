@@ -38,19 +38,6 @@ public class PlanPresenter implements PlanPresenterInterface{
             repo.deletePlannedMeal(meal);
     }
 
-    /*@Override
-    public void getAllPlannedMeal() {
-       planMealList = repo.getAllPlannedMeals();
-        planMealList.observeForever(new Observer<List<PlanedMeal>>() {
-            @Override
-            public void onChanged(List<PlanedMeal> meals) {
-                view.showDatemeal(meals);
-                Log.i(TAG, "onChanged: lulu in Presenter " + meals.get(0).getDate());
-
-            }
-        });
-
-    }*/
     @Override
     public void getAllPlannedMeal(Date selectedDate) {
         // Retrieve all planned meals

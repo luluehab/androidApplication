@@ -78,11 +78,12 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="3dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingHorizontal="8dp"
             android:src="@drawable/favorite"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/detailsAddToCal"
             app:layout_constraintTop_toTopOf="@+id/detailsImageView" />
 
         <TextView
@@ -152,6 +153,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredientSentence"
             tools:listitem="@layout/ingre_item" />
+
+        <ImageButton
+            android:id="@+id/detailsAddToCal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="3dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/calendar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailsAddToFav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

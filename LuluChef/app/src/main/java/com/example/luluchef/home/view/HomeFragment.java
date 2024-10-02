@@ -125,8 +125,10 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     @Override
     public void onCalClicked(Meal meal) {
-        showCalendarPopup(meal);
+        DayFragment dialogFragment = new DayFragment(meal);
+        dialogFragment.show(getFragmentManager(), "DayFragment");
     }
+
 
     @Override
     public void onCategoryItemClicked(Category category) {
@@ -147,11 +149,7 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
 
     }
 
-    private void showCalendarPopup(Meal meal) {
-        // Create and show the dialog fragment
-        DayFragment dialogFragment = new DayFragment(meal);
-        dialogFragment.show(getFragmentManager(), "DayFragment");
-    }
+
 
 
 
@@ -162,17 +160,25 @@ public class HomeFragment extends Fragment implements HomeOnClickListener,HomeVi
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("No Network")
-                .setMessage("Please check your connection.")
+                .setMessage("Please check your connection, and try again")
                 .setPositiveButton("Go to Favorites", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void  onClick(DialogInterface dialog, int which) {
                         // Navigate to Favorite Fragment
                         NavController navController = Navigation.findNavController(getView());
                         navController.navigate(R.id.action_homeFrag_to_favFrag);
                        // navigateToFragment(new FavFragment());
                         dialog.dismiss();
                     }
-                })
+                }).setNeutralButton("try again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Navigate to Calendar Fragment
+                        //navigateToFragment(new PlanFragment());
+                        NavController navController = Navigation.findNavController(getView());
+                        navController.navigate(R.id.action_currentFrag_to_homeFrag);
+                        dialog.dismiss();
+                    }})
                 .setNegativeButton("Go to Calendar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

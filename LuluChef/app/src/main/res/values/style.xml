@@ -4,4 +4,10 @@
     <style name="rounded_square">
         <item name="cornerSize">15dp</item>
     </style>
+    <style name="orange_button">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/lulu</item>
+    </style>
 </resources>

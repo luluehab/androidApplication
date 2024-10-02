@@ -23,6 +23,7 @@
     <string name="nonetmsg">Your device has no network. Please check your settings.</string>
     <string name="searchhere">search here\n</string>
     <string name="searching">serch</string>
+    <string name="continue_str">Continue</string>
 
 
     <string-array name="countryflags">

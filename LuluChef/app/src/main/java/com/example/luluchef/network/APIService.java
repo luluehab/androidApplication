@@ -53,13 +53,13 @@ public interface APIService {
     @GET("search.php")
     Call<NetworkResponse<Meal>> getMealByFirstChar(@Query("f") String firstChar);
 
-    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    @GET("filter.php")
     Call<NetworkResponse<Meal>> getMealsByIngredient(@Query("i") String ingredient);
 
-    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    @GET("filter.php")
     Call<NetworkResponse<Meal>> getMealsByCategory(@Query("c") String category);
 
-    @GET("filter.php")//this return list of strMeal and strMealThumb and idMeal just
+    @GET("filter.php")
     Call<NetworkResponse<Meal>> getMealsByCountry(@Query("a") String country);
 
 }

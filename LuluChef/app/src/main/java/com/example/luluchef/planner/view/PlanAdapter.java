@@ -1,5 +1,6 @@
 package com.example.luluchef.planner.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.example.luluchef.R;
 import com.example.luluchef.favourite.view.FavOnClickListener;
 import com.example.luluchef.model.PlanedMeal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder>{
@@ -83,5 +85,17 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             mealImg = itemView.findViewById(R.id.planmealImg);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateMeals(List<PlanedMeal> newMealPlans) {
+        this.plannedMeals = newMealPlans;
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void clearMeals() {
+        this.plannedMeals = new ArrayList<>();
+        notifyDataSetChanged();
     }
 }
