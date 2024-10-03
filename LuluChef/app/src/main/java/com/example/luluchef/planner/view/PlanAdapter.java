@@ -52,7 +52,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
         holder.mealDate.setText(dateFormat.format(meal.getDate()));
         Log.i(TAG, "onBindViewHolder: " + meal.getMeal().getStrMeal());
-        holder.mealType.setText(meal.getMeal().getStrCategory());
+        holder.mealType.setText(meal.getMealType());
         holder.mealArea.setText(meal.getMeal().getStrArea());
         Glide.with(context).load(meal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
 

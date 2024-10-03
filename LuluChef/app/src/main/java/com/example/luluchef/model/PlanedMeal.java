@@ -13,8 +13,14 @@ public class PlanedMeal {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String idMeal;
+
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
+    }
+
     @ColumnInfo(name = "date")
     private Date date;
+    private String mealType;
     private Meal meal;
 
     public String getIdMeal() {
@@ -26,6 +32,9 @@ public class PlanedMeal {
     }
 
 
+    public String getMealType() {
+        return mealType;
+    }
 
     public void setMeal(Meal meal) {
         this.meal = meal;
@@ -56,10 +65,11 @@ public class PlanedMeal {
    public PlanedMeal() {
    }
 
-    public PlanedMeal(Meal meal, Date day ,String idMeal)
+    public PlanedMeal(Meal meal, Date day ,String idMeal ,  String mealType)
     {
         this.meal = meal;
         this.date = day;
+        this.mealType = mealType;
         this.idMeal = idMeal;
 
     }

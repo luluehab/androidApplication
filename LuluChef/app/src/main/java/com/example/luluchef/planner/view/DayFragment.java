@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,15 +23,18 @@ import com.example.luluchef.model.PlanedMeal;
 import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.planner.Presenter.PlanPresenter;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
-import java.security.PrivateKey;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class DayFragment extends DialogFragment implements PlanView {
 
-    CalendarView calendarView ;
+    private CalendarView calendarView;
+    private ChipGroup mealChipGroup;
+    private Button submitMealButton;
     private Date selectedDate;
     private PlanPresenter presenter;
     private MealRepository repo;
@@ -40,8 +42,9 @@ public class DayFragment extends DialogFragment implements PlanView {
     private APIClient client;
     private Meal meal;
 
-    public DayFragment(Meal meal) {
+    private String selectedMealType; // Holds selected meal type (Breakfast, Lunch, Dinner)
 
+    public DayFragment(Meal meal) {
         this.meal = meal;
     }
 
@@ -51,20 +54,24 @@ public class DayFragment extends DialogFragment implements PlanView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
 
+        // Initialize views
         calendarView = view.findViewById(R.id.calendarView);
+        mealChipGroup = view.findViewById(R.id.mealChipGroup);
+        submitMealButton = view.findViewById(R.id.submitMealButton);
+
         // Set the minimum selectable date to today's date
         calendarView.setMinDate(System.currentTimeMillis());
 
+        // Initialize dependencies
         client = APIClient.getInstance();
         localSource = LocalSource.getInstance(view.getContext());
-        repo = MealRepository.getInstance(localSource , client);
-        presenter = new PlanPresenter(this , repo , getViewLifecycleOwner());
-        // Set a listener for the calendar view to capture the selected date
+        repo = MealRepository.getInstance(localSource, client);
+        presenter = new PlanPresenter(this, repo, getViewLifecycleOwner());
 
+        // Set a listener for the calendar view to capture the selected date
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, dayOfMonth);
@@ -74,43 +81,56 @@ public class DayFragment extends DialogFragment implements PlanView {
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             selectedDate = calendar.getTime();
-            Log.i(TAG, "onViewCreated: on Saviiiiiiiing " + selectedDate);
-            saveMealWithDate();  // Save the meal with the selected date
+            Log.i(TAG, "onViewCreated: Selected date " + selectedDate);
+        });
 
+        // Handle the meal selection logic
+        mealChipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Chip selectedChip = view.findViewById(checkedId);
+            if (selectedChip != null) {
+                    selectedMealType = selectedChip.getText().toString(); // Get selected meal type
+                Log.i(TAG, "Meal selected: " + selectedMealType);
+            }
+
+        });
+
+        // Handle submit button click
+        submitMealButton.setOnClickListener(v -> {
+            if (selectedDate != null && selectedMealType != null && meal.getIdMeal() != null) {
+                saveMealWithDate(); // Save the meal with the selected date and type
+            } else {
+                Toast.makeText(getContext(), "Please select a date and a meal type.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
     private void saveMealWithDate() {
-        if (selectedDate != null && meal.getIdMeal() != null) {
-            PlanedMeal plannedMeal = new PlanedMeal(meal,selectedDate , meal.getIdMeal());
+        if (selectedDate != null && meal.getIdMeal() != null && selectedMealType != null) {
+            PlanedMeal plannedMeal = new PlanedMeal(meal, selectedDate, meal.getIdMeal(), selectedMealType);
             presenter.AddtoPlannedTable(plannedMeal, selectedDate); // Save the planned meal in the database
-            Toast.makeText(getContext(), "Meal saved for " + meal.getIdMeal(), Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "saveMealWithDate: " + meal.getIdMeal());
+
+            Toast.makeText(getContext(), "Meal saved for " + selectedMealType + " on " + selectedDate, Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Meal saved: " + selectedMealType + " on " + selectedDate);
+
             // Optionally close the fragment after saving
-                dismiss();
+            dismiss();
         }
     }
 
     @Override
     public void showMeals(List<PlanedMeal> meals) {
-
+        // Implement display logic
     }
 
     @Override
     public void showErr(String error) {
-
+        // Implement error handling
     }
 
     @Override
     public void showDatemeal(List<PlanedMeal> meals) {
-
+        // Implement date-specific meal display logic
     }
 }

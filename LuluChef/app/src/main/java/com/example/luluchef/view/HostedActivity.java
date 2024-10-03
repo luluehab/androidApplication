@@ -73,15 +73,18 @@ public class HostedActivity extends AppCompatActivity {
         }
         else if(navController.getCurrentDestination().getId() == id.favFrag)
         {
-            finish();
+           // finish();
+            navController.navigate(id.homeFrag);
         }
         else if(navController.getCurrentDestination().getId() == id.searchFrag)
         {
-            finish();
+            //finish();
+            navController.navigate(id.homeFrag);
         }
         else if(navController.getCurrentDestination().getId() == id.planFrag)
         {
-            finish();
+           // finish();
+            navController.navigate(id.homeFrag);
         }
         else {
             // Otherwise, just handle the default back action (returning to previous fragments)
