@@ -62,13 +62,19 @@ public class DayFragment extends DialogFragment implements PlanView {
         client = APIClient.getInstance();
         localSource = LocalSource.getInstance(view.getContext());
         repo = MealRepository.getInstance(localSource , client);
-        presenter = new PlanPresenter(this , repo);
+        presenter = new PlanPresenter(this , repo , getViewLifecycleOwner());
         // Set a listener for the calendar view to capture the selected date
 
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, dayOfMonth);
             selectedDate = calendar.getTime();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            selectedDate = calendar.getTime();
+            Log.i(TAG, "onViewCreated: on Saviiiiiiiing " + selectedDate);
             saveMealWithDate();  // Save the meal with the selected date
 
         });

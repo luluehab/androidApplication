@@ -31,7 +31,7 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
     private String id ;
     private String from;
     LiveData<Meal> favMeal;
-    LiveData<List<PlanedMeal>> planMeal;
+    LiveData<PlanedMeal> planMeal;
     public DetailPresenter(DetailsView view , MealRepository repo) {
         this.view = view;
         this.repo = repo;
@@ -59,21 +59,14 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
     @Override
     public void loadMealPlanDatabase(String id) {
 
-        planMeal = repo.getAllPlannedMeals();
-        planMeal.observeForever(new Observer<List<PlanedMeal>>() {
+        planMeal = repo.getPlanMealById(id);
+        planMeal.observeForever(new Observer<PlanedMeal>() {
             @Override
-            public void onChanged(List<PlanedMeal> planedMeals) {
-                if (planedMeals != null && !planedMeals.isEmpty()) {
-                    // Filter meals by a specific date (if required)
-
-                    for (PlanedMeal plannedMeal : planedMeals) {
-                        if (plannedMeal.getIdMeal().equals(id)){
-                            view.showDetails(plannedMeal.getMeal());
-                        }
-                    }
-                }
+            public void onChanged(PlanedMeal planedMeal) {
+                view.showDetails(planedMeal.getMeal());
             }
         });
+
     }
 
 
@@ -112,7 +105,6 @@ public class DetailPresenter implements DetailPresenterInterface , NetworkCallBa
 
     @Override
     public void onFailure(String error) {
-
 
         if (from == "Plan")
         {

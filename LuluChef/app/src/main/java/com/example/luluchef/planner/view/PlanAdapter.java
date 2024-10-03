@@ -19,14 +19,18 @@ import com.example.luluchef.R;
 import com.example.luluchef.favourite.view.FavOnClickListener;
 import com.example.luluchef.model.PlanedMeal;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder>{
     private List<PlanedMeal> plannedMeals;
     private Context context;
     private onPlanClickListener onClick;
 
+
+    private static final String TAG ="l";
     public PlanAdapter(List<PlanedMeal> plannedMeals, Context context, onPlanClickListener onClick) {
         this.plannedMeals = plannedMeals;
         this.context = context;
@@ -42,9 +46,12 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
+        Log.i(TAG, "onBindViewHolder: "+ plannedMeals.get(position).getMeal().getStrMeal());
         PlanedMeal meal = plannedMeals.get(position);
         holder.mealName.setText(meal.getMeal().getStrMeal());
-        holder.mealDate.setText(meal.getDate().toString());// Format the date if needed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+        holder.mealDate.setText(dateFormat.format(meal.getDate()));
+        Log.i(TAG, "onBindViewHolder: " + meal.getMeal().getStrMeal());
         holder.mealType.setText(meal.getMeal().getStrCategory());
         holder.mealArea.setText(meal.getMeal().getStrArea());
         Glide.with(context).load(meal.getMeal().getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
@@ -52,7 +59,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                plannedMeals.remove(position);
+               // notifyDataSetChanged();
+                notifyItemRemoved(position);  // Notify the specific item removed
+                notifyItemRangeChanged(position, plannedMeals.size());  // Notify the items that may have changed
                 onClick.onDelClicked(meal);
             }
         });
@@ -69,6 +79,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         return plannedMeals.size();
     }
 
+    public List<PlanedMeal> getPlannedMeals() {
+        return plannedMeals;
+    }
     public static class PlanViewHolder extends RecyclerView.ViewHolder {
         TextView mealName;
         TextView mealDate;
@@ -89,12 +102,15 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateMeals(List<PlanedMeal> newMealPlans) {
-        this.plannedMeals = newMealPlans;
+        Log.i(TAG, "updateMeals: ");
+        this.plannedMeals.clear();
+        this.plannedMeals.addAll(newMealPlans);
         notifyDataSetChanged();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void clearMeals() {
+        Log.i(TAG, "clearMeals in adapter: ");
         this.plannedMeals = new ArrayList<>();
         notifyDataSetChanged();
     }

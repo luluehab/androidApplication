@@ -47,12 +47,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         Meal meal = mealList.get(position);
         Glide.with(context).load(meal.getStrMealThumb()).apply(new RequestOptions().override(500,500).placeholder(R.drawable.ic_launcher_foreground)).into(holder.mealImg);
-        holder.saveBtn.setImageResource(R.drawable.heart_fill);
         holder.mealName.setText(meal.getStrMeal());
         holder.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClick.onFavClicked(meal);
+                holder.saveBtn.setImageResource(R.drawable.heart_fill);
                 Toast.makeText(context, meal.getStrMeal() + " added to favorite", Toast.LENGTH_SHORT).show();
             }
         });

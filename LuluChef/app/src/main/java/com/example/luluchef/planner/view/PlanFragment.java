@@ -2,6 +2,8 @@ package com.example.luluchef.planner.view;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ import com.example.luluchef.model.Repo.MealRepository;
 import com.example.luluchef.network.APIClient;
 import com.example.luluchef.planner.Presenter.PlanPresenter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -45,8 +48,28 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     private MealRepository repo;
     private List<PlanedMeal> plannedMeals;
     private Date selectedDate;
+  //  private Date todayDate;
+    private boolean isComingFromDetails = false; // Flag to track navigation
 
     public PlanFragment() {
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+       // long todayMillis = calendarView.getDate();
+       // todayDate =new Date(todayMillis);
+       // selectedDate = todayDate;
+       // showMealWithDate(todayDate);
+
+        Log.i(TAG, "onStart: ");
 
     }
 
@@ -77,22 +100,93 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
         client = APIClient.getInstance();
         localSource = LocalSource.getInstance(view.getContext());
         repo = MealRepository.getInstance(localSource , client);
-        presenter = new PlanPresenter (this , repo );
+        presenter = new PlanPresenter (this , repo , getViewLifecycleOwner() );
+        Log.i(TAG, "onViewCreated: ");
+       //                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("selectedDatePrefs", Context.MODE_PRIVATE);
+       //                long dateMillis = sharedPreferences.getLong("selectedDate", -1); // Default value -1 if not found
+       //                if (dateMillis != -1) {
+       //                    selectedDate = new Date(dateMillis); // Restore date from long
+       //                    calendarView.setDate(selectedDate.getTime(), true, true); // Set the date on CalendarView
+       //                    Log.i(TAG, "onViewCreated: in shared done "+ selectedDate);
+       //                }
+       //                else{
+       //                    //long todayMillis = calendarView.getDate();
+       //                    //selectedDate = new Date(todayMillis);
+       //                    selectedDate = todayDate;
+       //                    calendarView.setDate(selectedDate.getTime(), true, true); // Set the date on CalendarView
+       //                    Log.i(TAG, "onViewCreated: sorrrrrrrryyyyyy " + selectedDate);
+       //                }
+
+        // Get today's date from the CalendarView
+      //  long todayMillis = calendarView.getDate();
+
+
+        selectedDate = new Date();
+        // Create a Calendar instance and set the time to the selected date
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate);
+        // Set the time components to zero
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        // Update the selectedDate to the modified date
+        selectedDate = calendar1.getTime();
+        showMealWithDate(selectedDate);
 
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, dayOfMonth);
-            selectedDate = calendar.getTime();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Date selectedDate = calendar.getTime();
+            //Log.i(TAG, "onViewCreated: on Saviiiiiiiing " + selectedDate);
             //presenter.getMealForDay(selectedDate);
-            showMealWithDate();
+            showMealWithDate(selectedDate);
 
         });
 
+
     }
 
-    private void showMealWithDate() {
-        if (selectedDate != null) {
-            presenter.getAllPlannedMeal(selectedDate);
+    @Override
+    public void onPause() {
+        super.onPause();
+       // Log.i(TAG, "onPause: ");
+       // if(selectedDate != null)
+       // {
+       //     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("selectedDatePrefs", Context.MODE_PRIVATE);
+       //     SharedPreferences.Editor editor = sharedPreferences.edit();
+       //     editor.putLong("selectedDate", selectedDate.getTime());// Store date as long
+       //     Log.i(TAG, "onPause: " + selectedDate );
+       //     Log.i(TAG, "onPause: "+  selectedDate.getTime());
+       //     editor.apply();
+       // }
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+       // showMealWithDate();
+        // Check if returning from details
+       // if (isComingFromDetails) {
+       //     // Reset to today's date if coming from details
+       //     selectedDate = todayDate;
+       //     calendarView.setDate(todayDate.getTime(), true, true);
+       //     isComingFromDetails = false; // Reset the flag
+       // }
+       // showMealWithDate(selectedDate);
+    }
+
+    private void showMealWithDate(Date date) {
+        if (date != null) {
+            Log.i(TAG, "showMealWithDate: "+ date);
+          //  presenter.getAllPlannedMeal(selectedDate);
+            presenter.getPlannedMealByDate(date);
         }
 
     }
@@ -105,33 +199,41 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
     @Override
     public void showErr(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        if(planAdapter != null) {
+            Log.i(TAG, "showErr: "+ error);
+           planAdapter.clearMeals();
+        }
+        //Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showDatemeal(List<PlanedMeal> meals) {
 
-        /*if (planAdapter != null)
+         if(planAdapter != null)
         {
-            planAdapter.clearMeals();
-        }*/
-
-        if(planAdapter == null)
-        {
-            planAdapter = new PlanAdapter(meals,getContext(),this);
+            Log.i(TAG, "showDatemeal: plan adapter is not null ");
+          // planAdapter.clearMeals();
+           // planAdapter.updateMeals(meals);
+             planAdapter = new PlanAdapter(new ArrayList<>(),getContext(),this);
             plannedRecycler.setAdapter(planAdapter);
+            planAdapter.notifyDataSetChanged();
+
         }
-        else
-        {
-            planAdapter.updateMeals(meals);
-        }
+        // else
+        // {
+             Log.i(TAG, "showDatemeal: " + meals.get(0).getMeal().getStrMeal());
+             planAdapter = new PlanAdapter(meals,getContext(),this);
+             plannedRecycler.setAdapter(planAdapter);
+        // }
 
 
     }
 
     @Override
     public void onDelClicked(PlanedMeal meal) {
+        Log.i(TAG, "onDelClicked: " + meal.getDate());
         presenter.removeFromPlannedTable(meal);
+        presenter.getPlannedMealByDate(meal.getDate());
     }
 
     @Override
@@ -141,11 +243,8 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
         args.putString("id", id);
         args.putString("from", "Plan");
         NavController navController = Navigation.findNavController(getView());
+       // isComingFromDetails = true;
         navController.navigate(R.id.action_HOmeFrag_to_detailFrag, args);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

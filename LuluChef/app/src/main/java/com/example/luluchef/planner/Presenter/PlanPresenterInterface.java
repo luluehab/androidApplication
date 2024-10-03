@@ -7,9 +7,9 @@ import java.util.Date;
 
 public interface PlanPresenterInterface {
 
-    public void AddtoPlannedTable(PlanedMeal meal , Date date) ;
-    public void removeFromPlannedTable(PlanedMeal meal);
-    public void getAllPlannedMeal(Date selectedDate);
-    public void getMealForDay(Date day);
+    void AddtoPlannedTable(PlanedMeal meal , Date date) ;
+    void removeFromPlannedTable(PlanedMeal meal);
+    void getPlannedMealByDate(Date selectedDate);
+    //void getAllPlannedMeal(Date selectedDate);
 
 }
