@@ -32,18 +32,17 @@ public interface MealDAO {
     @Query("SELECT * FROM meals_table WHERE idMeal = :id LIMIT 1")
     LiveData<Meal> getMealById(String id);
 
-    @Query("SELECT * FROM planMeal_table WHERE idMeal = :id LIMIT 1")
-    LiveData<PlanedMeal> getPlanMealById(String id);
-
-    @Query("SELECT * FROM planMeal_table WHERE date = :day")
-    LiveData<List<PlanedMeal>> getMealForDay(Date day);
-
-
     @Query("SELECT * FROM meals_table")
     LiveData<List<Meal>> getAllMeals();
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM planMeal_table WHERE date = :day")
+    LiveData<List<PlanedMeal>> getMealForDay(Date day);
+
+    @Query("SELECT * FROM planMeal_table WHERE idMeal = :id LIMIT 1")
+    LiveData<PlanedMeal> getPlanMealById(String id);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertPLannedMeal(PlanedMeal meal);
 
     @Delete

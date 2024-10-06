@@ -48,8 +48,7 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
     private MealRepository repo;
     private List<PlanedMeal> plannedMeals;
     private Date selectedDate;
-  //  private Date todayDate;
-    private boolean isComingFromDetails = false; // Flag to track navigation
+
 
     public PlanFragment() {
 
@@ -61,17 +60,6 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-       // long todayMillis = calendarView.getDate();
-       // todayDate =new Date(todayMillis);
-       // selectedDate = todayDate;
-       // showMealWithDate(todayDate);
-
-        Log.i(TAG, "onStart: ");
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,51 +139,15 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-       // Log.i(TAG, "onPause: ");
-       // if(selectedDate != null)
-       // {
-       //     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("selectedDatePrefs", Context.MODE_PRIVATE);
-       //     SharedPreferences.Editor editor = sharedPreferences.edit();
-       //     editor.putLong("selectedDate", selectedDate.getTime());// Store date as long
-       //     Log.i(TAG, "onPause: " + selectedDate );
-       //     Log.i(TAG, "onPause: "+  selectedDate.getTime());
-       //     editor.apply();
-       // }
-    }
-
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-       // showMealWithDate();
-        // Check if returning from details
-       // if (isComingFromDetails) {
-       //     // Reset to today's date if coming from details
-       //     selectedDate = todayDate;
-       //     calendarView.setDate(todayDate.getTime(), true, true);
-       //     isComingFromDetails = false; // Reset the flag
-       // }
-       // showMealWithDate(selectedDate);
-    }
 
     private void showMealWithDate(Date date) {
         if (date != null) {
             Log.i(TAG, "showMealWithDate: "+ date);
-          //  presenter.getAllPlannedMeal(selectedDate);
             presenter.getPlannedMealByDate(date);
         }
 
     }
 
-
-    @Override
-    public void showMeals(List<PlanedMeal> meals) {
-
-    }
 
     @Override
     public void showErr(String error) {
@@ -206,26 +158,22 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
         //Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
+    // for adapter
     @Override
     public void showDatemeal(List<PlanedMeal> meals) {
 
          if(planAdapter != null)
         {
             Log.i(TAG, "showDatemeal: plan adapter is not null ");
-          // planAdapter.clearMeals();
-           // planAdapter.updateMeals(meals);
-             planAdapter = new PlanAdapter(new ArrayList<>(),getContext(),this);
-            plannedRecycler.setAdapter(planAdapter);
-            planAdapter.notifyDataSetChanged();
-
+            //planAdapter = new PlanAdapter(new ArrayList<>(),getContext(),this);
+            //plannedRecycler.setAdapter(planAdapter);
+            //planAdapter.notifyDataSetChanged();
+            planAdapter.clearMeals();
         }
-        // else
-        // {
-             Log.i(TAG, "showDatemeal: " + meals.get(0).getMeal().getStrMeal());
+
+           //  Log.i(TAG, "showDatemeal: " + meals.get(0).getMeal().getStrMeal());
              planAdapter = new PlanAdapter(meals,getContext(),this);
              plannedRecycler.setAdapter(planAdapter);
-        // }
-
 
     }
 
@@ -234,6 +182,8 @@ public class PlanFragment extends Fragment implements PlanView , onPlanClickList
         Log.i(TAG, "onDelClicked: " + meal.getDate());
         presenter.removeFromPlannedTable(meal);
         presenter.getPlannedMealByDate(meal.getDate());
+
+
     }
 
     @Override

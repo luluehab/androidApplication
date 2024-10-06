@@ -10,8 +10,8 @@ import java.util.Date;
 @Entity(tableName = "planMeal_table")
 public class PlanedMeal {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
     private String idMeal;
 
     public void setMealType(String mealType) {
@@ -44,18 +44,11 @@ public class PlanedMeal {
         return meal;
     }
 
-    public int getId() {
-        return id;
-    }
-
 
     public Date getDate() {
         return date;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     public void setDate(Date date) {

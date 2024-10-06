@@ -15,7 +15,7 @@
         app:destination="@id/detailFrag" />
     <action
         android:id="@+id/action_currentFragment_to_calendarFragment"
-        app:destination="@id/calender" />
+        app:destination="@id/planFrag" />
     <action
         android:id="@+id/action_homeFrag_to_mealsFrag"
         app:destination="@id/mealFrag" />

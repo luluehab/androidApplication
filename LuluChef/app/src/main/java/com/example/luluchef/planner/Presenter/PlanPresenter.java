@@ -61,7 +61,8 @@ public class PlanPresenter implements PlanPresenterInterface{
                     view.showDatemeal(meals);
                 }
                 else {
-                    Log.i(TAG, "onChanged: errorrrrrrrrr  ");
+                    Log.i(TAG, "onChanged: there is no meals");
+                    view.showDatemeal(new ArrayList<>());
                     view.showErr("no result");
                 }
             }

@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.example.luluchef.model.Meal;
 import com.example.luluchef.model.PlanedMeal;
 
-@Database(entities = {Meal.class, PlanedMeal.class},version = 7)
+@Database(entities = {Meal.class, PlanedMeal.class},version = 8)
 @TypeConverters({Converters.class})  // Add this line
 public abstract class MealDatabase extends RoomDatabase {
     private static MealDatabase instance = null;

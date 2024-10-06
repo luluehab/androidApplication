@@ -59,10 +59,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                plannedMeals.remove(position);
+                //plannedMeals.remove(position);
                // notifyDataSetChanged();
-                notifyItemRemoved(position);  // Notify the specific item removed
-                notifyItemRangeChanged(position, plannedMeals.size());  // Notify the items that may have changed
+               // notifyItemRemoved(position);  // Notify the specific item removed
+               // notifyItemRangeChanged(position, plannedMeals.size());  // Notify the items that may have changed
                 onClick.onDelClicked(meal);
             }
         });
@@ -111,7 +111,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     @SuppressLint("NotifyDataSetChanged")
     public void clearMeals() {
         Log.i(TAG, "clearMeals in adapter: ");
-        this.plannedMeals = new ArrayList<>();
+        this.plannedMeals.clear();
+        //this.plannedMeals = new ArrayList<>();
         notifyDataSetChanged();
     }
 }
